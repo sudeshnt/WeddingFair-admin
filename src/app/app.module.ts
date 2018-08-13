@@ -6,6 +6,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { DefaultLayoutComponent } from './containers';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
+import { RegisterComponent } from './views/register/register.component';
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -28,7 +30,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
