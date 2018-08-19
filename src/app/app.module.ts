@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { FormsModule } from '@angular/forms';
+
 
 import { DefaultLayoutComponent } from './containers';
 import { AppComponent } from './app.component';
@@ -20,11 +22,41 @@ import {
   AppSidebarModule,
 } from '@coreui/angular'
 
+import {
+  AdminService,
+  CategoryService,
+  ClientService,
+  ImageService,
+  MasterDataService,
+  VendorService
+} from "./shared/services/api-data-services";
+
+import {
+  EmitterService,
+  HttpService,
+  ToastNotificationService
+} from "./shared/services";
+
 // Import routing module
 import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
 import { TabsModule } from 'ngx-bootstrap/tabs';
+
+const API_SERVICES = [
+  AdminService,
+  CategoryService,
+  ClientService,
+  ImageService,
+  MasterDataService,
+  VendorService
+];
+
+const SERVICES = [
+  EmitterService,
+  HttpService,
+  ToastNotificationService
+];
 
 @NgModule({
   declarations: [
@@ -35,6 +67,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
@@ -44,7 +77,10 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     PerfectScrollbarModule,
     TabsModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    ...API_SERVICES,
+    ...SERVICES
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

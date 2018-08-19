@@ -1,4 +1,4 @@
-export class SevConfig {
+export class ServiceConfig {
 
   public static ADMIN_SERVICE = {
     NAME : 'ADMIN MANAGEMENT SERVICE',

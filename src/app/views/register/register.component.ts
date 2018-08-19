@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdminService } from '../../shared/services/api-data-services';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,6 +7,13 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
 
-  constructor() { }
+  user: any = {};
+
+  constructor(private adiminService: AdminService) { }
+
+  onRegisterFormSubmit (register_form) {
+    console.log(register_form);
+    // this.adiminService.
+  }
 
 }
