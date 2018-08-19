@@ -9,14 +9,14 @@ export class HttpService {
 
   private WEB_API_URL = AppConfig.API_URL;
 
-  constructor(private httpClient: HttpClient, private onEmit: EmitterService, private publicData : PublicData) { }
+  constructor(private httpClient: HttpClient, private onEmit: EmitterService, private publicData: PublicData) { }
 
-  httpGet(sevConfig : any, path : string, body : any, header_value : any) {
-    let promise = new Promise((resolve, reject) => {
-      var header = new HttpHeaders().set('Content-Type', 'application/json');
+  httpGet(sevConfig: any, path: string, body: any, header_value: any) {
+    const promise = new Promise((resolve, reject) => {
+      const header = new HttpHeaders().set('Content-Type', 'application/json');
       const httpHeaders = this.setHeader(header, header_value);
       const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      return this.httpClient.get(url,{ headers: httpHeaders })
+      return this.httpClient.get(url, { headers: httpHeaders })
         .toPromise()
         .then(response => {
           resolve(response);
@@ -30,13 +30,13 @@ export class HttpService {
     return promise;
   }
 
-  httpPost(sevConfig : any, path : string, body : any, header_value : any) {
-    let promise = new Promise((resolve, reject) => {
+  httpPost(sevConfig: any, path: string, body: any, header_value: any) {
+    const promise = new Promise((resolve, reject) => {
       const req_body = JSON.stringify(body);
-        var header = new HttpHeaders().set('Content-Type', 'application/json');
-        const httpHeaders = this.setHeader(header, header_value);
+      const header = new HttpHeaders().set('Content-Type', 'application/json');
+      const httpHeaders = this.setHeader(header, header_value);
       const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      return this.httpClient.request("POST",url,{body:body,headers:httpHeaders})
+      return this.httpClient.request( 'POST', url, {body: body, headers: httpHeaders})
         .toPromise()
         .then(response => {
           resolve(response);
@@ -50,13 +50,13 @@ export class HttpService {
     return promise;
   }
 
-  httpPut(sevConfig : any, path : string, body : any, header_value : any) {
-    let promise = new Promise((resolve, reject) => {
+  httpPut(sevConfig: any, path: string, body: any, header_value: any) {
+    const promise = new Promise((resolve, reject) => {
       const req_body = JSON.stringify(body);
-        var header = new HttpHeaders().set('Content-Type', 'application/json');
-        const httpHeaders = this.setHeader(header, header_value);
+      const header = new HttpHeaders().set('Content-Type', 'application/json');
+      const httpHeaders = this.setHeader(header, header_value);
       const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      return this.httpClient.request("PUT",url,{body:req_body,headers:httpHeaders})
+      return this.httpClient.request( 'PUT', url, {body: req_body, headers: httpHeaders})
         .toPromise()
         .then(response => {
           resolve(response);
@@ -70,16 +70,16 @@ export class HttpService {
     return promise;
   }
 
-  httpPostFile(sevConfig : any, path : string, body : any, header_value : any) {
-    let promise = new Promise((resolve, reject) => {
-      var header = new HttpHeaders();
+  httpPostFile(sevConfig: any, path: string, body: any, header_value: any) {
+    const promise = new Promise((resolve, reject) => {
+      const header = new HttpHeaders();
       const httpHeaders = this.setHeader(header, header_value);
       const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
       const formData: FormData = new FormData();
-      for(var key in body){
+      for (const key in body) {
           formData.append(key, body[key]);
       }
-      return this.httpClient.request("POST",url,{body:formData,headers:httpHeaders})
+      return this.httpClient.request( 'POST', url, {body: formData, headers: httpHeaders})
         .toPromise()
         .then(response => {
             resolve(response);
@@ -92,14 +92,14 @@ export class HttpService {
     return promise;
   }
 
-  private setHeader (header : any,header_value: any) {
-    if(this.publicData.LoginResponse.session){
+  private setHeader (header: any, header_value: any) {
+    if (this.publicData.LoginResponse.session) {
       header = header.set('sessionid', this.publicData.LoginResponse.session);
-    }else{
-      header = header.set('sessionid', "null");
+    } else {
+      header = header.set('sessionid', 'null');
     }
-    if(header_value){
-      for(var key in header_value){
+    if (header_value) {
+      for (const key in header_value) {
         header = header.set(key, header_value[key]);
       }
     }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdminService } from '../../shared/services/api-data-services';
+import { VendorService } from '../../shared/services/api-data-services';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,11 +9,15 @@ export class RegisterComponent {
 
   user: any = {};
 
-  constructor(private adiminService: AdminService) { }
+  constructor(private vendorService: VendorService) { }
 
   onRegisterFormSubmit (register_form) {
     console.log(register_form);
-    // this.adiminService.
+    this.vendorService.registerVendor({}).then((response: any) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

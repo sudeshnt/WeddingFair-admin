@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { DefaultLayoutComponent } from './containers';
 import { AppComponent } from './app.component';
@@ -20,7 +20,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
-} from '@coreui/angular'
+} from '@coreui/angular';
 
 import {
   AdminService,
@@ -29,13 +29,17 @@ import {
   ImageService,
   MasterDataService,
   VendorService
-} from "./shared/services/api-data-services";
+} from './shared/services/api-data-services';
 
 import {
   EmitterService,
   HttpService,
   ToastNotificationService
-} from "./shared/services";
+} from './shared/services';
+
+import {
+  PublicData
+} from './shared/data';
 
 // Import routing module
 import { AppRoutingModule } from './app.routing';
@@ -69,6 +73,7 @@ const SERVICES = [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    HttpClientModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
@@ -79,7 +84,8 @@ const SERVICES = [
   ],
   providers: [
     ...API_SERVICES,
-    ...SERVICES
+    ...SERVICES,
+    PublicData
   ],
   bootstrap: [AppComponent]
 })
