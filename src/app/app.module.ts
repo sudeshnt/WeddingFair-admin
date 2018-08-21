@@ -32,8 +32,10 @@ import {
 } from './shared/services/api-data-services';
 
 import {
+  AuthService,
   EmitterService,
   HttpService,
+  LocalDataService,
   ToastNotificationService
 } from './shared/services';
 
@@ -46,6 +48,8 @@ import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ServiceCategoriesComponent } from './views/service-categories/service-categories.component';
+import { CitiesComponent } from './views/cities/cities.component';
 
 const API_SERVICES = [
   AdminService,
@@ -57,8 +61,10 @@ const API_SERVICES = [
 ];
 
 const SERVICES = [
+  AuthService,
   EmitterService,
   HttpService,
+  LocalDataService,
   ToastNotificationService
 ];
 
@@ -67,7 +73,9 @@ const SERVICES = [
     AppComponent,
     ...APP_CONTAINERS,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ServiceCategoriesComponent,
+    CitiesComponent
   ],
   imports: [
     BrowserModule,

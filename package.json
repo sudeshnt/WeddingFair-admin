@@ -42,6 +42,7 @@
     "@coreui/icons": "0.3.0",
     "bootstrap": "4.1.2",
     "chart.js": "2.7.2",
+    "core-js": "2.5.7",
     "flag-icon-css": "3.0.0",
     "font-awesome": "4.7.0",
     "moment": "2.22.2",
@@ -49,11 +50,11 @@
     "ng2-charts": "1.6.0",
     "ngx-bootstrap": "3.0.1",
     "ngx-perfect-scrollbar": "6.2.0",
+    "rxjs": "6.2.1",
     "rxjs-compat": "6.2.1",
     "simple-line-icons": "2.4.1",
     "ts-helpers": "1.1.2",
-    "core-js": "2.5.7",
-    "rxjs": "6.2.1",
+    "ts-md5": "^1.2.4",
     "zone.js": "0.8.26"
   },
   "devDependencies": {

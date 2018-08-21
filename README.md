@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+sudo ng g c views/menu --module views/views.module.ts --spec false
+
+sudo ng g service shared/services/api-data-services/shop --module app.module.ts  --spec false
+
+ ng g c views/service-categories --module app.module.ts --spec false
