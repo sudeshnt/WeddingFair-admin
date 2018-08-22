@@ -34,6 +34,11 @@ import {
 } from './shared/services/api-data-services';
 
 import {
+  CommonMapService
+} from './shared/services/mapping-services';
+
+
+import {
   AuthService,
   EmitterService,
   HttpService,
@@ -61,6 +66,10 @@ const API_SERVICES = [
   ImageService,
   MasterDataService,
   VendorService
+];
+
+const MAPPING_SERVICES = [
+  CommonMapService
 ];
 
 const SERVICES = [
@@ -98,6 +107,7 @@ const SERVICES = [
   ],
   providers: [
     ...API_SERVICES,
+    ...MAPPING_SERVICES,
     ...SERVICES,
     PublicData
   ],

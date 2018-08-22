@@ -17,19 +17,45 @@
 </div>
 
 <ngx-datatable
+  style="width: 90%"
   class="material"
   [rows]="rows"
-  [columns]="[{name:'Name'},{name:'Gender'},{name:'Company'}]"
+  [columns]="columns"
   [columnMode]="'force'"
   [headerHeight]="50"
   [footerHeight]="50"
   [rowHeight]="'auto'"
-  [limit]="2">
+  [selected]="selected"
+  [selectionType]="'checkbox'"
+  [selectAllRowsOnPage]="true"
+
+  [externalPaging]="true"
+  [count]="pagination.totalRecords"
+  [offset]="pagination.pageNumber"
+  [limit]="pagination.size"
+  (page)='setPage($event)'
+
+  [externalSorting]="true"
+  [loadingIndicator]="loading"
+  (sort)="onSort($event)"
+
+  (select)='onSelect($event)'>
+  <ngx-datatable-column
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true">
+  </ngx-datatable-column>
+  <ngx-datatable-column *ngFor="let column of columns" [prop]="column.prop" [name]="column.name" [sortable]="column.sortable"></ngx-datatable-column>
 </ngx-datatable>
 
 <div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+    <form #cat_form="ngForm" (ngSubmit)="onCategoryFormSubmit(cat_form)" class="form-horizontal" role="form">
       <div class="modal-header">
         <h4 class="modal-title">Modal title</h4>
         <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
@@ -37,39 +63,25 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="card-body">
-            <div class="form-group">
-              <label for="company">Company</label>
-              <input type="text" class="form-control" id="company" placeholder="Enter your company name">
-            </div>
-            <div class="form-group">
-              <label for="vat">VAT</label>
-              <input type="text" class="form-control" id="vat" placeholder="PL1234567890">
-            </div>
-            <div class="form-group">
-              <label for="street">Street</label>
-              <input type="text" class="form-control" id="street" placeholder="Enter street name">
-            </div>
-            <div class="row">
-              <div class="form-group col-sm-8">
-                <label for="city">City</label>
-                <input type="text" class="form-control" id="city" placeholder="Enter your city">
-              </div>
-              <div class="form-group col-sm-4">
-                <label for="postal-code">Postal Code</label>
-                <input type="text" class="form-control" id="postal-code" placeholder="Postal Code">
-              </div>
-            </div><!--/.row-->
-            <div class="form-group">
-              <label for="country">Country</label>
-              <input type="text" class="form-control" id="country" placeholder="Country name">
-            </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name">Category Name</label>
+            <input type="text" name="name" #name="ngModel" ngModel class="form-control" id="name"
+                   placeholder="Enter your company name" required>
           </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" name="description" #description="ngModel" ngModel class="form-control" id="description"
+                   placeholder="Enter your company name">
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+    </form>
+
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
