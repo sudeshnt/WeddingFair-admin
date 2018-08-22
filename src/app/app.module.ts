@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { DefaultLayoutComponent } from './containers';
 import { AppComponent } from './app.component';
@@ -50,6 +52,7 @@ import { AppRoutingModule } from './app.routing';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ServiceCategoriesComponent } from './views/service-categories/service-categories.component';
 import { CitiesComponent } from './views/cities/cities.component';
+import { SubCategoriesComponent } from './views/sub-categories/sub-categories.component';
 
 const API_SERVICES = [
   AdminService,
@@ -75,9 +78,12 @@ const SERVICES = [
     LoginComponent,
     RegisterComponent,
     ServiceCategoriesComponent,
-    CitiesComponent
+    CitiesComponent,
+    SubCategoriesComponent
   ],
   imports: [
+    NgxDatatableModule,
+    ModalModule.forRoot(),
     BrowserModule,
     FormsModule,
     AppRoutingModule,

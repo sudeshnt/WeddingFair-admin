@@ -6,12 +6,17 @@ import { DefaultLayoutComponent } from './containers';
 
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
+import { ServiceCategoriesComponent } from './views/service-categories/service-categories.component';
+import { SubCategoriesComponent } from './views/sub-categories/sub-categories.component';
+import { CitiesComponent } from './views/cities/cities.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    component: DefaultLayoutComponent,
+    data: {
+      title: 'Home'
+    }
   },
   {
     path: 'login',
@@ -28,44 +33,33 @@ export const routes: Routes = [
     }
   },
   {
-    path: '',
+    path: 'master-data',
     component: DefaultLayoutComponent,
     data: {
       title: 'Home'
     },
     children: [
-      // {
-      //   path: 'base',
-      //   loadChildren: './views/base/base.module#BaseModule'
-      // },
-      // {
-      //   path: 'buttons',
-      //   loadChildren: './views/buttons/buttons.module#ButtonsModule'
-      // },
-      // {
-      //   path: 'charts',
-      //   loadChildren: './views/chartjs/chartjs.module#ChartJSModule'
-      // },
-      // {
-      //   path: 'dashboard',
-      //   loadChildren: './views/dashboard/dashboard.module#DashboardModule'
-      // },
-      // {
-      //   path: 'icons',
-      //   loadChildren: './views/icons/icons.module#IconsModule'
-      // },
-      // {
-      //   path: 'notifications',
-      //   loadChildren: './views/notifications/notifications.module#NotificationsModule'
-      // },
-      // {
-      //   path: 'theme',
-      //   loadChildren: './views/theme/theme.module#ThemeModule'
-      // },
-      // {
-      //   path: 'widgets',
-      //   loadChildren: './views/widgets/widgets.module#WidgetsModule'
-      // }
+      {
+        path: 'categories',
+        component: ServiceCategoriesComponent,
+        data: {
+          title: 'Cards'
+        }
+      },
+      {
+        path: 'sub-categories',
+        component: SubCategoriesComponent,
+        data: {
+          title: 'Cards'
+        }
+      },
+      {
+        path: 'cities',
+        component: CitiesComponent,
+        data: {
+          title: 'Cards'
+        }
+      }
     ]
   }
 ];

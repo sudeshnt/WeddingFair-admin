@@ -5,17 +5,22 @@ export const navItems = [
   },
   {
     name: 'Master Data',
-    url: '/base',
+    url: '/master-data',
     icon: 'icon-puzzle',
     children: [
       {
         name: 'Categories',
-        url: '/base/cards',
+        url: '/master-data/categories',
         icon: 'icon-puzzle'
       },
       {
         name: 'Sub Categories',
-        url: '/base/carousels',
+        url: '/master-data/sub-categories',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Cities',
+        url: '/master-data/cities',
         icon: 'icon-puzzle'
       }
     ]
