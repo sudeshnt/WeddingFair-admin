@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../../shared/services/api-data-services';
 import { Config } from '../../shared/config';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-service-categories',
@@ -8,11 +9,15 @@ import { Config } from '../../shared/config';
   styleUrls: ['./service-categories.component.scss']
 })
 export class ServiceCategoriesComponent implements OnInit {
+  @ViewChild('myModal') public modal: ModalDirective;
 
+  Config = Config;
   rows: Array<any> = [];
   columns = [
     { prop: 'name', name: 'Name', sortable: true },
-    { prop: 'description', name: 'Description', sortable: false }
+    { prop: 'description', name: 'Description', sortable: false },
+    { prop: 'status', name: 'Status', sortable: true },
+    { name: 'Action', sortable: false}
   ];
 
   loading = true;
@@ -22,7 +27,7 @@ export class ServiceCategoriesComponent implements OnInit {
   };
   pagination: any = {
     'pageNumber' : 0,
-    'size' : 1,
+    'size' : 10,
     'totalRecords' : 0
   };
 
@@ -47,12 +52,14 @@ export class ServiceCategoriesComponent implements OnInit {
         'imageUrl': ''
       };
       this.categoryService.createCategory(req).then((response: any) => {
-        console.log(response);
+        this.modal.hide();
+        this.rows.splice(0, 0, response.data);
+        this.pagination.totalRecords++;
       });
     }
   }
 
-  getCategoryList() {
+  private getCategoryList() {
     const req = {
       'offset': this.pagination.pageNumber,
       'limit': this.pagination.size,
@@ -71,9 +78,34 @@ export class ServiceCategoriesComponent implements OnInit {
       if (response) {
         this.pagination.totalRecords = response.recordCount;
         this.rows = response.data;
-        setTimeout(() => {
-          this.loading = false;
-        }, 1000);
+      }
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    }, error => {
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+    });
+  }
+
+  updateStatusOfSelected (status) {
+    for (const i in this.selected) {
+      this.updateStatus(i, status);
+    }
+  }
+
+  updateStatus (rowIndex, status) {
+    const req = {
+      'primaryId' : this.rows[rowIndex].categoryId,
+      'status' : status
+    };
+    this.categoryService.updateCategoryStatus(req).then((response) => {
+      if (status === Config.statusList.DELETED) {
+        this.rows.splice(rowIndex, 1);
+        this.pagination.totalRecords--;
+      } else {
+        this.rows[rowIndex].status = status;
       }
     });
   }
@@ -89,6 +121,18 @@ export class ServiceCategoriesComponent implements OnInit {
     this.sorting.value = event.sorts[0].dir;
     this.getCategoryList();
 
+  }
+
+  viewRow (row) {
+    console.log(row);
+  }
+
+  editRow (row) {
+    console.log(row);
+  }
+
+  deleteRow (row) {
+    console.log(row);
   }
 
 }
