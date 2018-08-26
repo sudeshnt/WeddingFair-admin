@@ -34,7 +34,9 @@ import {
 } from './shared/services/api-data-services';
 
 import {
-  CommonMapService
+  CommonMapService,
+  CategoryMapService,
+  VendorMapService
 } from './shared/services/mapping-services';
 
 
@@ -58,6 +60,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ServiceCategoriesComponent } from './views/service-categories/service-categories.component';
 import { CitiesComponent } from './views/cities/cities.component';
 import { SubCategoriesComponent } from './views/sub-categories/sub-categories.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
 
 const API_SERVICES = [
   AdminService,
@@ -69,7 +72,9 @@ const API_SERVICES = [
 ];
 
 const MAPPING_SERVICES = [
-  CommonMapService
+  CommonMapService,
+  CategoryMapService,
+  VendorMapService
 ];
 
 const SERVICES = [
@@ -88,7 +93,8 @@ const SERVICES = [
     RegisterComponent,
     ServiceCategoriesComponent,
     CitiesComponent,
-    SubCategoriesComponent
+    SubCategoriesComponent,
+    DataTableComponent
   ],
   imports: [
     NgxDatatableModule,

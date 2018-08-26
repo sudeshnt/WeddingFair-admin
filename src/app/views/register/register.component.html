@@ -12,49 +12,45 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-home"></i></span>
                   </div>
-                  <input type="text" name="shopName" #shopName="ngModel" [ngModel]="user.shopName" class="form-control" placeholder="Business Name" required>
+                  <input type="text" name="shopName" #shopName="ngModel" ngModel class="form-control" placeholder="Business Name" required>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-layers"></i></span>
                   </div>
                   <select name="category" #category="ngModel" [ngModel]="user.category" class="form-control" placeholder="Business Category" required>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option *ngFor="let category of serviceCategories" [value]="category.categoryId">{{category.name}}</option>
                   </select>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input type="text" name="ownerName" #ownerName="ngModel" [ngModel]="user.ownerName" class="form-control" placeholder="Owner's Name" required>
+                  <input type="text" name="ownerName" #ownerName="ngModel" ngModel class="form-control" placeholder="Owner's Name" required>
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-envelope-open"></i></span>
                   </div>
-                  <input type="text" name="email" #email="ngModel" [ngModel]="user.email" class="form-control" placeholder="Email">
+                  <input type="text" name="email" #email="ngModel" ngModel class="form-control" placeholder="Email">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-phone"></i></span>
                   </div>
-                  <input type="text" name="mobile" #mobile="ngModel" [ngModel]="user.mobile" class="form-control" placeholder="Mobile">
+                  <input type="text" name="mobile" #mobile="ngModel" ngModel class="form-control" placeholder="Mobile">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text">#</span>
                   </div>
-                  <input type="text" name="regNumber" #regNumber="ngModel" [ngModel]="user.regNumber" class="form-control" placeholder="Business Reg.Number">
+                  <input type="text" name="regNumber" #regNumber="ngModel" ngModel class="form-control" placeholder="Business Reg.Number">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-direction"></i></span>
                   </div>
-                  <input type="text" name="address" #address="ngModel" [ngModel]="user.address" class="form-control" placeholder="Address">
+                  <input type="text" name="address" #address="ngModel" ngModel class="form-control" placeholder="Address">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -72,13 +68,13 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input type="password" name="password" #password="ngModel" [ngModel]="user.password" class="form-control" placeholder="Password">
+                  <input type="password" name="password" #password="ngModel" ngModel class="form-control" placeholder="Password">
                 </div>
                 <div class="input-group mb-4">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input type="password" name="confirmPassword" #confirmPassword="ngModel" [ngModel]="user.confirmPassword" class="form-control" placeholder="Repeat password">
+                  <input type="password" name="confirmPassword" #confirmPassword="ngModel" ngModel class="form-control" placeholder="Repeat password">
                 </div>
                 <button type="submit" class="btn btn-block btn-success">Create Account</button>
               </form>

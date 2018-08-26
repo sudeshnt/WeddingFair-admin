@@ -16,7 +16,7 @@ export class ServiceCategoriesComponent implements OnInit {
   columns = [
     { prop: 'name', name: 'Name', sortable: true },
     { prop: 'description', name: 'Description', sortable: false },
-    { prop: 'status', name: 'Status', sortable: true },
+    { prop: 'statusName', name: 'Status', sortable: true },
     { name: 'Action', sortable: false}
   ];
 
@@ -69,13 +69,14 @@ export class ServiceCategoriesComponent implements OnInit {
       'orderByKey':  this.sorting.key || '',
       'orderByValue': this.sorting.value || '',
       'statuses': [
-        Config.statusList.PENDING,
-        Config.statusList.APPROVED,
-        Config.statusList.SUSPENDED
+        Config.statusList.PENDING.id,
+        Config.statusList.APPROVED.id,
+        Config.statusList.SUSPENDED.id
       ]
     };
     this.categoryService.categoryFindByCriteria(req).then((response: any) => {
       if (response) {
+        console.log(response);
         this.pagination.totalRecords = response.recordCount;
         this.rows = response.data;
       }
@@ -101,7 +102,7 @@ export class ServiceCategoriesComponent implements OnInit {
       'status' : status
     };
     this.categoryService.updateCategoryStatus(req).then((response) => {
-      if (status === Config.statusList.DELETED) {
+      if (status === Config.statusList.DELETED.id) {
         this.rows.splice(rowIndex, 1);
         this.pagination.totalRecords--;
       } else {

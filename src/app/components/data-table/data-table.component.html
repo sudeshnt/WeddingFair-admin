@@ -1,0 +1,45 @@
+<ngx-datatable
+  style="width: 90%"
+  class="material"
+  [rows]="rows"
+  [columns]="columns"
+  [columnMode]="tableConfig.columnMode"
+  [headerHeight]="tableConfig.headerHeight"
+  [footerHeight]="tableConfig.footerHeight"
+  [rowHeight]="tableConfig.rowHeight"
+  [selected]="selected"
+  [selectionType]="tableConfig.selectionType"
+  [selectAllRowsOnPage]="tableConfig.selectAllRowsOnPage"
+  [externalPaging]="tableConfig.selectionType"
+  [count]="pagination.totalRecords"
+  [offset]="pagination.pageNumber"
+  [limit]="pagination.size"
+  [externalSorting]="true"
+  [loadingIndicator]="loading"
+  (sort)="onSort($event)"
+  (page)='setPage($event)'
+  (select)='onSelect($event)'>
+  <ngx-datatable-column
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true">
+  </ngx-datatable-column>
+  <ngx-datatable-column *ngFor="let column of columns" [prop]="column.prop" [name]="column.name" [sortable]="column.sortable">
+    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template *ngIf="column.name == 'Action'">
+      <button md-icon-button class="btn-success" (click)="viewRow(row)">
+        <i class="fa fa-eye"></i>
+      </button>
+      <button md-icon-button class="btn-primary" (click)="editRow(row)">
+        <i class="fa fa-pencil-square-o"></i>
+      </button>
+      <button md-raised-button class="btn-danger" (click)="updateStatus(rowIndex, Config.statusList.DELETED.id)">
+        <i class="fa fa-trash-o"></i>
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+

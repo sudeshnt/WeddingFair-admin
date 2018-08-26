@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import {ServiceConfig} from '../../config';
+import { ServiceConfig } from '../../config';
 import { HttpService } from '../http.service';
-import { CommonMapService } from '../mapping-services';
+import { CommonMapService, CategoryMapService } from '../mapping-services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  constructor(private httpService: HttpService, private commonMap: CommonMapService) { }
+  constructor(private httpService: HttpService, private commonMap: CommonMapService, private categoryMap: CategoryMapService) { }
 
   // POST
   public createCategory (req) {
@@ -55,6 +55,10 @@ export class CategoryService {
       const path = '/findByCriteria';
       const request = this.commonMap.mapFindByCriteriaReq(req);
       this.httpService.httpPost(ServiceConfig.CATEGORY_SERVICE, path, request, null).then((response: any) => {
+        for (const i in response.data) {
+          // console.log(this.categoryMap.mapCategory(row));
+          response.data[i] = this.categoryMap.mapCategory(response.data[i]);
+        }
         resolve(response);
       }, (error) => {
         reject(error);
