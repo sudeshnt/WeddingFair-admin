@@ -14,11 +14,6 @@ export const navItems = [
         icon: 'icon-puzzle'
       },
       {
-        name: 'Sub Categories',
-        url: '/master-data/sub-categories',
-        icon: 'icon-puzzle'
-      },
-      {
         name: 'Cities',
         url: '/master-data/cities',
         icon: 'icon-puzzle'

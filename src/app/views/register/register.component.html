@@ -19,6 +19,7 @@
                     <span class="input-group-text"><i class="icon-layers"></i></span>
                   </div>
                   <select name="category" #category="ngModel" [ngModel]="user.category" class="form-control" placeholder="Business Category" required>
+                    <option value="">Select a Category</option>
                     <option *ngFor="let category of serviceCategories" [value]="category.categoryId">{{category.name}}</option>
                   </select>
                 </div>
@@ -57,11 +58,8 @@
                     <span class="input-group-text"><i class="icon-location-pin"></i></span>
                   </div>
                   <select class="form-control" name="city" #city="ngModel" [ngModel]="user.city" placeholder="City">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value="">Select your city</option>
+                    <option *ngFor="let city of cities" [value]="city.cityId">{{city.name}}</option>
                   </select>
                 </div>
                 <div class="input-group mb-3">

@@ -4,20 +4,19 @@ import { ComFunction } from '../../class';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryMapService {
+export class MasterDataMapService {
 
   constructor(private comFunc: ComFunction) { }
 
-  public mapCategory(data) {
-    const response = {
-      'categoryId': data.categoryId || 0,
-      'description': data.description || null,
-      'imageUrl': data.imageUrl || null,
-      'name': data.name || null,
+  public mapCity(data) {
+    const request = {
+      'cityId': data.cityId || 0,
+      'name': data.name || 0,
+      'postCode': data.postCode || null,
       'statusId': data.status || 0,
       'status': this.comFunc.getStatusName(data.status)
     };
-    return response;
+    return request;
   }
 
 }

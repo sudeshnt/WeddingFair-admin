@@ -1,5 +1,7 @@
 export class Config {
 
+  public static pageSize = 10;
+
   public static adminTypes = {
     X_ADMIN : 1,
     SUPER_ADMIN : 2

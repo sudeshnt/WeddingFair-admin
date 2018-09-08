@@ -13,21 +13,21 @@
 <ngx-datatable
   style="width: 90%"
   class="material"
-  [rows]="rows"
-  [columns]="columns"
+  [rows]="tableConfig.rows"
+  [columns]="tableConfig.columns"
   [columnMode]="'force'"
   [headerHeight]="50"
   [footerHeight]="50"
   [rowHeight]="'auto'"
-  [selected]="selected"
+  [selected]="tableConfig.selected"
   [selectionType]="'checkbox'"
   [externalPaging]="true"
-  [count]="pagination.totalRecords"
-  [offset]="pagination.pageNumber"
-  [limit]="pagination.size"
+  [count]="tableConfig.pagination.totalRecords"
+  [offset]="tableConfig.pagination.pageNumber"
+  [limit]="tableConfig.pagination.size"
   (page)='setPage($event)'
   [externalSorting]="true"
-  [loadingIndicator]="loading"
+  [loadingIndicator]="tableConfig.loading"
   (sort)="onSort($event)"
   (select)='onSelect($event)'>
   <ngx-datatable-column
@@ -39,7 +39,7 @@
     [headerCheckboxable]="true"
     [checkboxable]="true">
   </ngx-datatable-column>
-  <ngx-datatable-column *ngFor="let column of columns" [prop]="column.prop" [name]="column.name" [sortable]="column.sortable">
+  <ngx-datatable-column *ngFor="let column of tableConfig.columns" [prop]="column.prop" [name]="column.name" [sortable]="column.sortable">
     <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template *ngIf="column.name == 'Action'">
       <button md-icon-button class="btn-success" (click)="viewRow(row)">
         <i class="fa fa-eye"></i>

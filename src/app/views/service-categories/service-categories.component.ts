@@ -22,26 +22,28 @@ export class ServiceCategoriesComponent implements OnInit {
 
   selectedCategory: any = {};
 
-  rows: Array<any> = [];
-  columns = [
-    { prop: 'name', name: 'Name', sortable: true },
-    { prop: 'description', name: 'Description', sortable: false },
-    { prop: 'statusName', name: 'Status', sortable: true },
-    { name: 'Action', sortable: false}
-  ];
-  loading = true;
-  sorting: any = {
-    'key' : '',
-    'value' : ''
-  };
-  pagination: any = {
-    'pageNumber' : 0,
-    'size' : 10,
-    'totalRecords' : 0
+  tableConfig: any = {
+    rows : [],
+    columns : [
+      { prop: 'name', name: 'Name', sortable: true },
+      { prop: 'description', name: 'Description', sortable: false },
+      { prop: 'status', name: 'Status', sortable: true },
+      { name: 'Action', sortable: false}
+    ],
+    loading : true,
+    sorting : {
+      'key' : '',
+      'value' : ''
+    },
+    pagination : {
+      'pageNumber' : 0,
+      'size' : Config.pageSize,
+      'totalRecords' : 0
+    },
+    selectAll : false,
+    selected : []
   };
 
-  selectAll = false;
-  selected = [];
 
   ngOnInit() {
     this.getCategoryList();
@@ -49,13 +51,13 @@ export class ServiceCategoriesComponent implements OnInit {
 
   private getCategoryList() {
     const req = {
-      'offset': this.pagination.pageNumber,
-      'limit': this.pagination.size,
+      'offset': this.tableConfig.pagination.pageNumber,
+      'limit': this.tableConfig.pagination.size,
       'searchKeys': [],
       'operators': [],
       'values': [],
-      'orderByKey':  this.sorting.key || '',
-      'orderByValue': this.sorting.value || '',
+      'orderByKey':  this.tableConfig.sorting.key || '',
+      'orderByValue': this.tableConfig.sorting.value || '',
       'statuses': [
         Config.statusList.PENDING.id,
         Config.statusList.APPROVED.id,
@@ -64,22 +66,22 @@ export class ServiceCategoriesComponent implements OnInit {
     };
     this.categoryService.categoryFindByCriteria(req).subscribe((response: any) => {
       if (response) {
-        this.pagination.totalRecords = response.recordCount;
-        this.rows = response.data;
+        this.tableConfig.pagination.totalRecords = response.recordCount;
+        this.tableConfig.rows = response.data;
       }
-      this.selectAll = false;
-      this.selected.splice(0, this.selected.length);
+      this.tableConfig.selectAll = false;
+      this.clearSelectedRows();
       this.hideLoading();
     }, error => {
-      this.selectAll = false;
-      this.selected.splice(0, this.selected.length);
+      this.tableConfig.selectAll = false;
+      this.clearSelectedRows();
       this.hideLoading();
     });
   }
 
   onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
+    this.clearSelectedRows();
+    this.tableConfig.selected.push(...selected);
   }
 
   onCategoryFormSubmit (cat_form) {
@@ -93,8 +95,6 @@ export class ServiceCategoriesComponent implements OnInit {
         this.categoryService.createCategory(req).subscribe((response: any) => {
           this.hideModal();
           this.getCategoryList();
-          // this.rows.splice(0, 0, response.data);
-          // this.pagination.totalRecords++;
         });
       } else {
         const req = {
@@ -105,16 +105,14 @@ export class ServiceCategoriesComponent implements OnInit {
         };
         this.categoryService.updateCategory(req).subscribe((response: any) => {
           this.hideModal();
-          // this.rows.splice(0, 0, response.data);
           this.getCategoryList();
-          // this.pagination.totalRecords++;
         });
       }
     }
   }
 
   updateStatusOfSelected (status) {
-    for (const row of this.selected) {
+    for (const row of this.tableConfig.selected) {
       this.updateStatus(row, status);
     }
   }
@@ -124,29 +122,21 @@ export class ServiceCategoriesComponent implements OnInit {
       'primaryId' : row.categoryId,
       'status' : status
     };
-    const rowIndex = this.rows.indexOf(row);
     this.categoryService.updateCategoryStatus(req).subscribe((response) => {
-      if (status === Config.statusList.DELETED.id) {
-        this.rows.splice(rowIndex, 1);
-        this.pagination.totalRecords--;
-      } else {
-        this.rows[rowIndex]['status'] = status;
-        this.rows[rowIndex]['statusName'] = this.comFunc.getStatusName(status);
-      }
       this.getCategoryList();
     });
   }
 
   setPage(pageInfo) {
-    this.loading = true;
-    this.pagination.pageNumber = pageInfo.offset;
+    this.tableConfig.loading = true;
+    this.tableConfig.pagination.pageNumber = pageInfo.offset;
     this.getCategoryList();
   }
 
   onSort(event) {
-    this.loading = true;
-    this.sorting.key = event.sorts[0].prop;
-    this.sorting.value = event.sorts[0].dir;
+    this.tableConfig.loading = true;
+    this.tableConfig.sorting.key = event.sorts[0].prop;
+    this.tableConfig.sorting.value = event.sorts[0].dir;
     this.getCategoryList();
   }
 
@@ -175,10 +165,14 @@ export class ServiceCategoriesComponent implements OnInit {
     this.updateStatus(row, Config.statusList.DELETED.id);
   }
 
+  private clearSelectedRows () {
+    this.tableConfig.selected.splice(0, this.tableConfig.selected.length);
+  }
+
   private hideLoading() {
     setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+      this.tableConfig.loading = false;
+    }, 500);
   }
 
   hideModal() {

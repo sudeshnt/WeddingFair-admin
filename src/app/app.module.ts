@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 import { DefaultLayoutComponent } from './containers';
 import { AppComponent } from './app.component';
@@ -41,7 +42,8 @@ import {
 import {
   CommonMapService,
   CategoryMapService,
-  VendorMapService
+  VendorMapService,
+  MasterDataMapService
 } from './shared/services/mapping-services';
 
 
@@ -79,7 +81,8 @@ const API_SERVICES = [
 const MAPPING_SERVICES = [
   CommonMapService,
   CategoryMapService,
-  VendorMapService
+  VendorMapService,
+  MasterDataMapService
 ];
 
 const SERVICES = [
@@ -116,7 +119,12 @@ const SERVICES = [
     AppSidebarModule,
     PerfectScrollbarModule,
     DialogModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    })
   ],
   providers: [
     ComFunction,

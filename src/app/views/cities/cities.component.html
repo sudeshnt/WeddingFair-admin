@@ -1,3 +1,88 @@
-<p>
-  cities works!
-</p>
+<div class="row align-items-center">
+  <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+    <button type="button" class="btn btn-block btn-primary" data-toggle="modal" (click)="addNewRow()">Add New</button>
+  </div>
+  <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+    <button type="button" class="btn btn-block btn-success" (click)="updateStatusOfSelected(Config.statusList.APPROVED.id)">Approve</button>
+  </div>
+  <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+    <button type="button" class="btn btn-block btn-warning" (click)="updateStatusOfSelected(Config.statusList.SUSPENDED.id)">Suspend</button>
+  </div>
+</div>
+
+<ngx-datatable
+  style="width: 90%"
+  class="material"
+  [rows]="tableConfig.rows"
+  [columns]="tableConfig.columns"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [selected]="tableConfig.selected"
+  [selectionType]="'checkbox'"
+  [externalPaging]="true"
+  [count]="tableConfig.pagination.totalRecords"
+  [offset]="tableConfig.pagination.pageNumber"
+  [limit]="tableConfig.pagination.size"
+  (page)='setPage($event)'
+  [externalSorting]="true"
+  [loadingIndicator]="tableConfig.loading"
+  (sort)="onSort($event)"
+  (select)='onSelect($event)'>
+  <ngx-datatable-column
+    [width]="30"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true">
+  </ngx-datatable-column>
+  <ngx-datatable-column *ngFor="let column of tableConfig.columns" [prop]="column.prop" [name]="column.name" [sortable]="column.sortable">
+    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template *ngIf="column.name == 'Action'">
+      <button md-icon-button class="btn-success" (click)="viewRow(row)">
+        <i class="fa fa-eye"></i>
+      </button>
+      <button md-icon-button class="btn-primary" (click)="editRow(row)">
+        <i class="fa fa-pencil-square-o"></i>
+      </button>
+      <button md-raised-button class="btn-danger" (click)="deleteRow(row)">
+        <i class="fa fa-trash-o"></i>
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form #city_form="ngForm" (ngSubmit)="onCityFormSubmit(city_form)" class="form-horizontal" role="form">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal title</h4>
+          <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="name">City Name</label>
+              <input type="text" name="name" #name="ngModel" [(ngModel)]="selectedCity.name" class="form-control"
+                     id="name" placeholder="Enter city name" [disabled]="readOnlyMode" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Postal Code</label>
+              <input type="text" name="postCode" #postCode="ngModel" [(ngModel)]="selectedCity.postCode" class="form-control"
+                     id="description" placeholder="Enter city postal code" [disabled]="readOnlyMode">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Close</button>
+          <button type="submit" class="btn btn-primary" [hidden]="readOnlyMode">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

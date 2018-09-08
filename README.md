@@ -31,3 +31,6 @@ sudo ng g c views/menu --module views/views.module.ts --spec false
 sudo ng g service shared/services/api-data-services/shop --module app.module.ts  --spec false
 
  ng g c views/service-categories --module app.module.ts --spec false
+ 
+ use to upload images
+ https://academind.com/learn/angular/snippets/angular-image-upload-made-easy/

@@ -16,8 +16,13 @@ export class ServiceConfig {
   };
 
   public static MASTER_SERVICE = {
-    NAME : 'MASTER-DATA MANAGEMENT SERVICE',
+    NAME : 'MASTER-DATA SERVICE',
     ROUTE_PATH : '/master_data_service'
+  };
+
+  public static MASTER_DATA_MGMT_SERVICE = {
+    NAME : 'MASTER-DATA MANAGEMENT SERVICE',
+    ROUTE_PATH : '/master_data_management_service'
   };
 
   public static VENDOR_SERVICE = {

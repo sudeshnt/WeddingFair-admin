@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LocalDataService } from './local-data.service';
 import { Config, AppConfig, ServiceConfig } from '../config';
+import {catchError, map} from "rxjs/operators";
+import {throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -19,37 +21,38 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private localStorage: LocalDataService) { }
 
   public authenticate (username, password) {
-    const promise = new Promise((resolve, reject) => {
-      const req = {
-        'loginName': username,
-        'password': password
-      };
-      const header = new HttpHeaders();
-      const url =  AppConfig.API_URL + ServiceConfig.ADMIN_SERVICE.ROUTE_PATH + '/login';
-      return this.httpClient.request('PUT', url, {body: req, headers: header})
-        .toPromise()
-        .then((response: any) => {
-          const user = this.getUserObject(response.adminId,
-            response.loginName,
-            response.name,
-            response.shopName,
-            response.categoryId,
-            response.serviceProviderId,
-            response.superAdmin,
-            response.xAdmin,
-            response.sessionId,
-            response.firstTime,
-            response.status);
-          const adminType = response.xAdmin ? Config.adminTypes.X_ADMIN : (response.superAdmin ? Config.adminTypes.SUPER_ADMIN : 0 );
-          this.createSession(response.adminId, response.name, adminType, response.sessionId, user);
+    const req = {
+      'loginName': username,
+      'password': password
+    };
+    const header = new HttpHeaders();
+    const url =  AppConfig.API_URL + ServiceConfig.ADMIN_SERVICE.ROUTE_PATH + '/login';
+    return this.httpClient.put(url, req, { headers: header }).pipe(
+      map(
+        (res: any) => {
+          const user = this.getUserObject(res.adminId,
+            res.loginName,
+            res.name,
+            res.shopName,
+            res.categoryId,
+            res.serviceProviderId,
+            res.superAdmin,
+            res.xAdmin,
+            res.sessionId,
+            res.firstTime,
+            res.status);
+          const adminType = res.xAdmin ? Config.adminTypes.X_ADMIN : (res.superAdmin ? Config.adminTypes.SUPER_ADMIN : 0 );
+          this.createSession(res.adminId, res.name, adminType, res.sessionId, user);
           this.localStorage.setItem( 'user', JSON.stringify(this.session));
-          resolve(user);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-    return promise;
+          return res;
+        }
+      ),
+      catchError(
+        (error: any) => throwError(
+          this.httpErrorHandler(error)
+        )
+      )
+    );
   }
 
   public logout() {
@@ -115,6 +118,28 @@ export class AuthService {
     user.firstTime = firstTime || true;
     user.status = status || 0;
     return user;
+  }
+
+  private httpErrorHandler(error) {
+    switch (error.status) {
+      case 401:
+        error.errorMessage = 'user not authorized';
+        break;
+      case 304:
+        const eTag = error.headers.get('ETag');
+        if (eTag) {
+          const res = eTag.replace(/'/g, '');
+          error.errorMessage = res;
+        }
+        break;
+      case 500:
+        error.errorMessage = 'Server Error';
+        break;
+      default:
+        error.errorMessage = 'Connection Error';
+        break;
+    }
+    return error;
   }
 
 }

@@ -46,13 +46,13 @@ export const routes: Routes = [
           title: 'Cards'
         }
       },
-      {
-        path: 'sub-categories',
-        component: SubCategoriesComponent,
-        data: {
-          title: 'Cards'
-        }
-      },
+      // {
+      //   path: 'sub-categories',
+      //   component: SubCategoriesComponent,
+      //   data: {
+      //     title: 'Cards'
+      //   }
+      // },
       {
         path: 'cities',
         component: CitiesComponent,
