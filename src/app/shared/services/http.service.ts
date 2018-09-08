@@ -1,95 +1,64 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EmitterService } from './emitter.service';
-import { AppConfig } from './../config';
-import { PublicData } from './../data/public-data';
+import { throwError} from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+import { AppConfig } from '../config';
+import { PublicData } from '../data/public-data';
 
 @Injectable()
 export class HttpService {
 
   private WEB_API_URL = AppConfig.API_URL;
 
-  constructor(private httpClient: HttpClient, private onEmit: EmitterService, private publicData: PublicData) { }
+  constructor(private httpClient: HttpClient, private publicData: PublicData) { }
 
   httpGet(sevConfig: any, path: string, body: any, header_value: any) {
-    const promise = new Promise((resolve, reject) => {
-      const header = new HttpHeaders().set('Content-Type', 'application/json');
-      const httpHeaders = this.setHeader(header, header_value);
-      const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      return this.httpClient.get(url, { headers: httpHeaders })
-        .toPromise()
-        .then(response => {
-          resolve(response);
-        })
-        .catch(error => {
-          error = this.httpErrorHandler(error);
-          this.onEmit.broadcastHttpErrorEventEmitter(error);
-          reject(error);
-        });
-    });
-    return promise;
+    const header = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpHeaders = this.setHeader(header, header_value);
+    const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
+    return this.httpClient.get(url, { headers: httpHeaders }).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(
+          this.httpErrorHandler(error)
+        )
+      )
+    );
   }
 
   httpPost(sevConfig: any, path: string, body: any, header_value: any) {
-    const promise = new Promise((resolve, reject) => {
-      const req_body = JSON.stringify(body);
-      const header = new HttpHeaders().set('Content-Type', 'application/json');
-      const httpHeaders = this.setHeader(header, header_value);
-      const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      return this.httpClient.request( 'POST', url, {body: body, headers: httpHeaders})
-        .toPromise()
-        .then(response => {
-          resolve(response);
-        })
-        .catch(error => {
-          error = this.httpErrorHandler(error);
-          this.onEmit.broadcastHttpErrorEventEmitter(error);
-          reject(error);
-        });
-    });
-    return promise;
+    const header = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpHeaders = this.setHeader(header, header_value);
+    const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
+    return this.httpClient.post(url, body, { headers: httpHeaders }).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(
+          this.httpErrorHandler(error)
+        )
+      )
+    );
   }
 
   httpPut(sevConfig: any, path: string, body: any, header_value: any) {
-    const promise = new Promise((resolve, reject) => {
-      const req_body = JSON.stringify(body);
-      const header = new HttpHeaders().set('Content-Type', 'application/json');
-      const httpHeaders = this.setHeader(header, header_value);
-      const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      return this.httpClient.request( 'PUT', url, {body: req_body, headers: httpHeaders})
-        .toPromise()
-        .then(response => {
-          resolve(response);
-        })
-        .catch(error => {
-          error = this.httpErrorHandler(error);
-          this.onEmit.broadcastHttpErrorEventEmitter(error);
-          reject(error);
-        });
-    });
-    return promise;
-  }
-
-  httpPostFile(sevConfig: any, path: string, body: any, header_value: any) {
-    const promise = new Promise((resolve, reject) => {
-      const header = new HttpHeaders();
-      const httpHeaders = this.setHeader(header, header_value);
-      const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
-      const formData: FormData = new FormData();
-      for (const key in body) {
-          formData.append(key, body[key]);
-      }
-      return this.httpClient.request( 'POST', url, {body: formData, headers: httpHeaders})
-        .toPromise()
-        .then(response => {
-            resolve(response);
-        })
-        .catch(error => {
-            this.onEmit.broadcastHttpErrorEventEmitter(error);
-            reject(error);
-        });
-    });
-    return promise;
+    const header = new HttpHeaders().set('Content-Type', 'application/json');
+    const httpHeaders = this.setHeader(header, header_value);
+    const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
+    return this.httpClient.put(url, body, { headers: httpHeaders }).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(
+          this.httpErrorHandler(error)
+        )
+      )
+    );
   }
 
   private setHeader (header: any, header_value: any) {
@@ -119,9 +88,10 @@ export class HttpService {
         }
         break;
       case 500:
-        error.errorMessage = 'Connection Error';
+        error.errorMessage = 'Server Error';
         break;
       default:
+        error.errorMessage = 'Connection Error';
         break;
     }
     return error;

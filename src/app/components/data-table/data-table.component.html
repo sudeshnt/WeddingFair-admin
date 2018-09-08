@@ -19,15 +19,15 @@
   (sort)="onSort($event)"
   (page)='setPage($event)'
   (select)='onSelect($event)'>
-  <ngx-datatable-column
-    [width]="30"
-    [sortable]="false"
-    [canAutoResize]="false"
-    [draggable]="false"
-    [resizeable]="false"
-    [headerCheckboxable]="true"
-    [checkboxable]="true">
-  </ngx-datatable-column>
+  <!--<ngx-datatable-column-->
+    <!--[width]="30"-->
+    <!--[sortable]="false"-->
+    <!--[canAutoResize]="false"-->
+    <!--[draggable]="false"-->
+    <!--[resizeable]="false"-->
+    <!--[headerCheckboxable]="true"-->
+    <!--[checkboxable]="true">-->
+  <!--</ngx-datatable-column>-->
   <ngx-datatable-column *ngFor="let column of columns" [prop]="column.prop" [name]="column.name" [sortable]="column.sortable">
     <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template *ngIf="column.name == 'Action'">
       <button md-icon-button class="btn-success" (click)="viewRow(row)">

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +13,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+import { DialogModule } from 'primeng/dialog';
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -23,6 +26,8 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
+
+import { ComFunction } from './shared/class';
 
 import {
   AdminService,
@@ -41,9 +46,9 @@ import {
 
 
 import {
+  HttpService,
   AuthService,
   EmitterService,
-  HttpService,
   LocalDataService,
   ToastNotificationService
 } from './shared/services';
@@ -78,9 +83,9 @@ const MAPPING_SERVICES = [
 ];
 
 const SERVICES = [
+  HttpService,
   AuthService,
   EmitterService,
-  HttpService,
   LocalDataService,
   ToastNotificationService
 ];
@@ -100,6 +105,7 @@ const SERVICES = [
     NgxDatatableModule,
     ModalModule.forRoot(),
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
@@ -109,9 +115,11 @@ const SERVICES = [
     AppHeaderModule,
     AppSidebarModule,
     PerfectScrollbarModule,
+    DialogModule,
     TabsModule.forRoot()
   ],
   providers: [
+    ComFunction,
     ...API_SERVICES,
     ...MAPPING_SERVICES,
     ...SERVICES,

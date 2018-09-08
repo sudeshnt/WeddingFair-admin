@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../../shared/services/api-data-services';
 import { Config } from '../../shared/config';
 import { ModalDirective } from 'ngx-bootstrap';
+import { ComFunction } from '../../shared/class';
+
+declare var $;
 
 @Component({
   selector: 'app-service-categories',
@@ -11,7 +14,14 @@ import { ModalDirective } from 'ngx-bootstrap';
 export class ServiceCategoriesComponent implements OnInit {
   @ViewChild('myModal') public modal: ModalDirective;
 
+  constructor(private categoryService: CategoryService, private comFunc: ComFunction) { }
+
   Config = Config;
+  readOnlyMode = false;
+  isEditMode = false;
+
+  selectedCategory: any = {};
+
   rows: Array<any> = [];
   columns = [
     { prop: 'name', name: 'Name', sortable: true },
@@ -19,7 +29,6 @@ export class ServiceCategoriesComponent implements OnInit {
     { prop: 'statusName', name: 'Status', sortable: true },
     { name: 'Action', sortable: false}
   ];
-
   loading = true;
   sorting: any = {
     'key' : '',
@@ -31,32 +40,11 @@ export class ServiceCategoriesComponent implements OnInit {
     'totalRecords' : 0
   };
 
+  selectAll = false;
   selected = [];
-
-  onSelect({ selected }) {
-    this.selected.splice(0, this.selected.length);
-    this.selected.push(...selected);
-  }
-
-  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.getCategoryList();
-  }
-
-  onCategoryFormSubmit (cat_form) {
-    if (cat_form.valid) {
-      const req = {
-        'name': cat_form.value.name,
-        'description': cat_form.value.description,
-        'imageUrl': ''
-      };
-      this.categoryService.createCategory(req).then((response: any) => {
-        this.modal.hide();
-        this.rows.splice(0, 0, response.data);
-        this.pagination.totalRecords++;
-      });
-    }
   }
 
   private getCategoryList() {
@@ -74,44 +62,83 @@ export class ServiceCategoriesComponent implements OnInit {
         Config.statusList.SUSPENDED.id
       ]
     };
-    this.categoryService.categoryFindByCriteria(req).then((response: any) => {
+    this.categoryService.categoryFindByCriteria(req).subscribe((response: any) => {
       if (response) {
-        console.log(response);
         this.pagination.totalRecords = response.recordCount;
         this.rows = response.data;
       }
-      setTimeout(() => {
-        this.loading = false;
-      }, 1000);
+      this.selectAll = false;
+      this.selected.splice(0, this.selected.length);
+      this.hideLoading();
     }, error => {
-      setTimeout(() => {
-        this.loading = false;
-      }, 1000);
+      this.selectAll = false;
+      this.selected.splice(0, this.selected.length);
+      this.hideLoading();
     });
   }
 
-  updateStatusOfSelected (status) {
-    for (const i in this.selected) {
-      this.updateStatus(i, status);
+  onSelect({ selected }) {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...selected);
+  }
+
+  onCategoryFormSubmit (cat_form) {
+    if (cat_form.valid) {
+      if (!this.isEditMode) {
+        const req = {
+          'name': cat_form.value.name,
+          'description': cat_form.value.description,
+          'imageUrl': ''
+        };
+        this.categoryService.createCategory(req).subscribe((response: any) => {
+          this.hideModal();
+          this.getCategoryList();
+          // this.rows.splice(0, 0, response.data);
+          // this.pagination.totalRecords++;
+        });
+      } else {
+        const req = {
+          'categoryId': this.selectedCategory.categoryId,
+          'name': cat_form.value.name,
+          'description': cat_form.value.description,
+          'imageUrl': ''
+        };
+        this.categoryService.updateCategory(req).subscribe((response: any) => {
+          this.hideModal();
+          // this.rows.splice(0, 0, response.data);
+          this.getCategoryList();
+          // this.pagination.totalRecords++;
+        });
+      }
     }
   }
 
-  updateStatus (rowIndex, status) {
+  updateStatusOfSelected (status) {
+    for (const row of this.selected) {
+      this.updateStatus(row, status);
+    }
+  }
+
+  updateStatus (row, status) {
     const req = {
-      'primaryId' : this.rows[rowIndex].categoryId,
+      'primaryId' : row.categoryId,
       'status' : status
     };
-    this.categoryService.updateCategoryStatus(req).then((response) => {
+    const rowIndex = this.rows.indexOf(row);
+    this.categoryService.updateCategoryStatus(req).subscribe((response) => {
       if (status === Config.statusList.DELETED.id) {
         this.rows.splice(rowIndex, 1);
         this.pagination.totalRecords--;
       } else {
-        this.rows[rowIndex].status = status;
+        this.rows[rowIndex]['status'] = status;
+        this.rows[rowIndex]['statusName'] = this.comFunc.getStatusName(status);
       }
+      this.getCategoryList();
     });
   }
 
   setPage(pageInfo) {
+    this.loading = true;
     this.pagination.pageNumber = pageInfo.offset;
     this.getCategoryList();
   }
@@ -121,19 +148,41 @@ export class ServiceCategoriesComponent implements OnInit {
     this.sorting.key = event.sorts[0].prop;
     this.sorting.value = event.sorts[0].dir;
     this.getCategoryList();
+  }
 
+  addNewRow() {
+    this.modal.show();
+    this.isEditMode = false;
+    this.readOnlyMode = false;
+    this.selectedCategory = {};
   }
 
   viewRow (row) {
-    console.log(row);
+    this.modal.show();
+    this.isEditMode = false;
+    this.readOnlyMode = true;
+    this.selectedCategory = row;
   }
 
   editRow (row) {
-    console.log(row);
+    this.modal.show();
+    this.isEditMode = true;
+    this.readOnlyMode = false;
+    this.selectedCategory = row;
   }
 
   deleteRow (row) {
-    console.log(row);
+    this.updateStatus(row, Config.statusList.DELETED.id);
+  }
+
+  private hideLoading() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+  }
+
+  hideModal() {
+    this.modal.hide();
   }
 
 }

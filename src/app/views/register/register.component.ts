@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { VendorService, CategoryService } from '../../shared/services/api-data-services';
 import { Md5 } from 'ts-md5';
+import {catchError, map} from "rxjs/operators";
+import {throwError} from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -37,15 +39,14 @@ export class RegisterComponent implements OnInit {
       'facebook': '',
       'logoUrl': ''
     };
-    this.vendorService.registerVendor(req).then((response: any) => {
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
+    this.vendorService.registerVendor(req).subscribe(
+      (res: any) => console.log(res),
+      (error: any) => console.log(error)
+    );
   }
 
   private getApprovedCategories() {
-    this.categoryService.getApprovedCategories().then((response: any) => {
+    this.categoryService.getApprovedCategories().subscribe((response: any) => {
       if (response) {
         this.serviceCategories = response.data;
         this.user.category = this.serviceCategories[0].categoryId;
