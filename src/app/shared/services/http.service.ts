@@ -5,13 +5,14 @@ import { catchError, map } from 'rxjs/operators';
 
 import { AppConfig } from '../config';
 import { PublicData } from '../data/public-data';
+import { ComFunction } from '../class';
 
 @Injectable()
 export class HttpService {
 
   private WEB_API_URL = AppConfig.API_URL;
 
-  constructor(private httpClient: HttpClient, private publicData: PublicData) { }
+  constructor(private httpClient: HttpClient, private publicData: PublicData, private comFunc: ComFunction) { }
 
   httpGet(sevConfig: any, path: string, body: any, header_value: any) {
     const header = new HttpHeaders().set('Content-Type', 'application/json');
@@ -23,7 +24,7 @@ export class HttpService {
       ),
       catchError(
         (error: any) => throwError(
-          this.httpErrorHandler(error)
+          this.comFunc.httpErrorHandler(error)
         )
       )
     );
@@ -39,7 +40,7 @@ export class HttpService {
       ),
       catchError(
         (error: any) => throwError(
-          this.httpErrorHandler(error)
+          this.comFunc.httpErrorHandler(error)
         )
       )
     );
@@ -55,7 +56,7 @@ export class HttpService {
       ),
       catchError(
         (error: any) => throwError(
-          this.httpErrorHandler(error)
+          this.comFunc.httpErrorHandler(error)
         )
       )
     );
@@ -74,28 +75,5 @@ export class HttpService {
     }
     return header;
   }
-
-  private httpErrorHandler(error) {
-    switch (error.status) {
-      case 401:
-        error.errorMessage = 'user not authorized';
-        break;
-      case 304:
-        const eTag = error.headers.get('ETag');
-        if (eTag) {
-          const res = eTag.replace(/'/g, '');
-          error.errorMessage = res;
-        }
-        break;
-      case 500:
-        error.errorMessage = 'Server Error';
-        break;
-      default:
-        error.errorMessage = 'Connection Error';
-        break;
-    }
-    return error;
-  }
-
 
 }

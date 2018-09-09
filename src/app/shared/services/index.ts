@@ -5,3 +5,4 @@ export * from './local-data.service';
 export * from './toast-notification.service';
 export * from './api-data-services';
 export * from './mapping-services';
+export * from './auth.guard';

@@ -48,6 +48,8 @@ import {
 
 
 import {
+  XAdminAuthGuard,
+  VendorAuthGuard,
   HttpService,
   AuthService,
   EmitterService,
@@ -86,6 +88,8 @@ const MAPPING_SERVICES = [
 ];
 
 const SERVICES = [
+  XAdminAuthGuard,
+  VendorAuthGuard,
   HttpService,
   AuthService,
   EmitterService,

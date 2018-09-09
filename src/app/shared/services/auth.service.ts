@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LocalDataService } from './local-data.service';
 import { Config, AppConfig, ServiceConfig } from '../config';
-import {catchError, map} from "rxjs/operators";
-import {throwError} from "rxjs";
+import { catchError, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { ComFunction } from '../class';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
     'user' : null
   };
 
-  constructor(private httpClient: HttpClient, private localStorage: LocalDataService) { }
+  constructor(private httpClient: HttpClient, private localStorage: LocalDataService, private comFunc: ComFunction) { }
 
   public authenticate (username, password) {
     const req = {
@@ -49,7 +50,7 @@ export class AuthService {
       ),
       catchError(
         (error: any) => throwError(
-          this.httpErrorHandler(error)
+          this.comFunc.httpErrorHandler(error)
         )
       )
     );
@@ -118,28 +119,6 @@ export class AuthService {
     user.firstTime = firstTime || true;
     user.status = status || 0;
     return user;
-  }
-
-  private httpErrorHandler(error) {
-    switch (error.status) {
-      case 401:
-        error.errorMessage = 'user not authorized';
-        break;
-      case 304:
-        const eTag = error.headers.get('ETag');
-        if (eTag) {
-          const res = eTag.replace(/'/g, '');
-          error.errorMessage = res;
-        }
-        break;
-      case 500:
-        error.errorMessage = 'Server Error';
-        break;
-      default:
-        error.errorMessage = 'Connection Error';
-        break;
-    }
-    return error;
   }
 
 }

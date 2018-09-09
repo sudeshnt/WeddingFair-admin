@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService, LocalDataService } from './shared/services';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'WeddingFair-admin';
+
+  constructor (private authService: AuthService, private localStorage: LocalDataService) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    authService.updateUserFromLocalData(user);
+  }
+
 }
