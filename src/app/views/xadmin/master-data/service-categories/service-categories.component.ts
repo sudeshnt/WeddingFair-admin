@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CategoryService } from '../../shared/services/api-data-services';
-import { Config } from '../../shared/config';
+import { CategoryService } from '../../../../shared/services/api-data-services/index';
+import { Config } from '../../../../shared/config/index';
 import { ModalDirective } from 'ngx-bootstrap';
-import { ComFunction } from '../../shared/class';
+import { ComFunction } from '../../../../shared/class/index';
 
 declare var $;
 

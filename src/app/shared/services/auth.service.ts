@@ -5,6 +5,7 @@ import { Config, AppConfig, ServiceConfig } from '../config';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ComFunction } from '../class';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class AuthService {
     'user' : null
   };
 
-  constructor(private httpClient: HttpClient, private localStorage: LocalDataService, private comFunc: ComFunction) { }
+  constructor(private router: Router, private httpClient: HttpClient, private localStorage: LocalDataService,
+              private comFunc: ComFunction) { }
 
   public authenticate (username, password) {
     const req = {
@@ -59,6 +61,7 @@ export class AuthService {
   public logout() {
     this.destroySession();
     this.localStorage.remove('user');
+    this.router.navigate(['/login']).then();
   }
 
   public updateUserFromLocalData (localData) {

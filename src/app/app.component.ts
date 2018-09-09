@@ -11,7 +11,9 @@ export class AppComponent {
 
   constructor (private authService: AuthService, private localStorage: LocalDataService) {
     const user = JSON.parse(localStorage.getItem('user'));
-    authService.updateUserFromLocalData(user);
+    if (user) {
+      authService.updateUserFromLocalData(user);
+    }
   }
 
 }

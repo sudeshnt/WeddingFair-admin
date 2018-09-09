@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ServiceConfig } from '../../config';
-import { VendorMapService } from '../mapping-services';
+import { CommonMapService, VendorMapService } from '../mapping-services';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 
@@ -10,27 +10,62 @@ import {throwError} from 'rxjs';
 })
 export class VendorService {
 
-  constructor(private httpService: HttpService, private vendorMap: VendorMapService) { }
+  constructor(private httpService: HttpService, private vendorMap: VendorMapService, private commonMap: CommonMapService) { }
 
   public registerVendor (req) {
-    // loadUserRequestEffect$: Observable<Action> = this.actions$.pipe(
-    //   ofType<storeActions.GetUsers>(storeActions.ActionTypes.GET_USERS),
-    //   switchMap(action =>
-    //     this.accountService.getUsers(action.payload).pipe(
-    //       map(data => new storeActions.GetUsersSuccess({data})),
-    //       catchError(error =>
-    //         observableOf(new storeActions.GetUsersFailure(error))
-    //       )
-    //     )
-    //   )
-    // );
-
-
     const path = '';
     const request = this.vendorMap.mapVendorRegisterReq(req);
     return this.httpService.httpPost(ServiceConfig.VENDOR_SERVICE, path, request, null).pipe(
       map(
         (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(error)
+      ));
+  }
+
+  // PUT
+  public updateVendorStatus (req) {
+    const path = '/updateStatus';
+    return this.httpService.httpPut(ServiceConfig.VENDOR_SERVICE, path, req, null).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(error)
+      ));
+  }
+
+  // POST
+  public vendorFindByCriteria (req) {
+    const path = '/findByCriteria';
+    const request = this.commonMap.mapFindByCriteriaReq(req);
+    return this.httpService.httpPost(ServiceConfig.VENDOR_SERVICE, path, request, null).pipe(
+      map(
+        (res: any) => {
+          res.data = res.data.map(item =>
+            this.vendorMap.mapVendor(item)
+          );
+          return res;
+        }
+      ),
+      catchError(
+        (error: any) =>
+          throwError(error)
+      ));
+  }
+
+  // GET
+  public getApprovedCategories () {
+    const path = '/categories/approved';
+    return this.httpService.httpGet(ServiceConfig.VENDOR_SERVICE, path, {}, null).pipe(
+      map(
+        (res: any) => {
+          res.data = res.data.map(item =>
+            this.vendorMap.mapVendor(item)
+          );
+          return res;
+        }
       ),
       catchError(
         (error: any) => throwError(error)

@@ -1,29 +1,32 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Config } from '../../shared/config';
+import { Config } from '../../../shared/config/index';
+import { VendorService } from '../../../shared/services/api-data-services/index';
+import { ComFunction } from '../../../shared/class/index';
 import { ModalDirective } from 'ngx-bootstrap';
-import { MasterDataService } from '../../shared/services/api-data-services';
 
 @Component({
-  selector: 'app-cities',
-  templateUrl: './cities.component.html',
-  styleUrls: ['./cities.component.scss']
+  selector: 'app-vendors',
+  templateUrl: './vendors.component.html',
+  styleUrls: ['./vendors.component.scss']
 })
-export class CitiesComponent implements OnInit {
+export class VendorsComponent implements OnInit {
   @ViewChild('myModal') public modal: ModalDirective;
 
-  constructor(private masterDataService: MasterDataService) { }
+  constructor(private vendorService: VendorService, private comFunc: ComFunction) { }
 
   Config = Config;
   readOnlyMode = false;
   isEditMode = false;
 
-  selectedCity: any = {};
+  selectedVendor: any = {};
 
   tableConfig: any = {
     rows : [],
     columns : [
       { prop: 'name', name: 'Name', sortable: true },
-      { prop: 'postCode', name: 'Postal Code', sortable: false },
+      { prop: 'ownerName', name: 'Owner', sortable: true },
+      { prop: 'mobile', name: 'Mobile', sortable: true },
+      { prop: 'email', name: 'Email', sortable: true },
       { prop: 'status', name: 'Status', sortable: true },
       { name: 'Action', sortable: false}
     ],
@@ -43,10 +46,10 @@ export class CitiesComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getCityList();
+    this.getVendorList();
   }
 
-  private getCityList() {
+  private getVendorList() {
     const req = {
       'offset': this.tableConfig.pagination.pageNumber,
       'limit': this.tableConfig.pagination.size,
@@ -61,7 +64,7 @@ export class CitiesComponent implements OnInit {
         Config.statusList.SUSPENDED.id
       ]
     };
-    this.masterDataService.cityFindByCriteria(req).subscribe((response: any) => {
+    this.vendorService.vendorFindByCriteria(req).subscribe((response: any) => {
       if (response) {
         this.tableConfig.pagination.totalRecords = response.recordCount;
         this.tableConfig.rows = response.data;
@@ -81,29 +84,31 @@ export class CitiesComponent implements OnInit {
     this.tableConfig.selected.push(...selected);
   }
 
-  onCityFormSubmit (city_form) {
-    if (city_form.valid) {
-      if (!this.isEditMode) {
-        const req = {
-          'name': city_form.value.name,
-          'postCode': city_form.value.postCode
-        };
-        this.masterDataService.createCity(req).subscribe((response: any) => {
-          this.hideModal();
-          this.getCityList();
-        });
-      } else {
-        const req = {
-          'cityId': this.selectedCity.cityId,
-          'name': city_form.value.name,
-          'postCode': city_form.value.postCode
-        };
-        this.masterDataService.updateCity(req).subscribe((response: any) => {
-          this.hideModal();
-          this.getCityList();
-        });
-      }
-    }
+  onVendorFormSubmit (cat_form) {
+    // if (cat_form.valid) {
+    //   if (!this.isEditMode) {
+    //     const req = {
+    //       'name': cat_form.value.name,
+    //       'description': cat_form.value.description,
+    //       'imageUrl': ''
+    //     };
+    //     this.vendorService.createVendor(req).subscribe((response: any) => {
+    //       this.hideModal();
+    //       this.getVendorList();
+    //     });
+    //   } else {
+    //     const req = {
+    //       'categoryId': this.selectedVendor.categoryId,
+    //       'name': cat_form.value.name,
+    //       'description': cat_form.value.description,
+    //       'imageUrl': ''
+    //     };
+    //     this.vendorService.updateVendor(req).subscribe((response: any) => {
+    //       this.hideModal();
+    //       this.getVendorList();
+    //     });
+    //   }
+    // }
   }
 
   updateStatusOfSelected (status) {
@@ -114,46 +119,46 @@ export class CitiesComponent implements OnInit {
 
   updateStatus (row, status) {
     const req = {
-      'primaryId' : row.cityId,
+      'primaryId' : row.serviceProviderId,
       'status' : status
     };
-    this.masterDataService.updateCityStatus(req).subscribe((response) => {
-      this.getCityList();
+    this.vendorService.updateVendorStatus(req).subscribe((response) => {
+      this.getVendorList();
     });
   }
 
   setPage(pageInfo) {
     this.tableConfig.loading = true;
     this.tableConfig.pagination.pageNumber = pageInfo.offset;
-    this.getCityList();
+    this.getVendorList();
   }
 
   onSort(event) {
     this.tableConfig.loading = true;
     this.tableConfig.sorting.key = event.sorts[0].prop;
     this.tableConfig.sorting.value = event.sorts[0].dir;
-    this.getCityList();
+    this.getVendorList();
   }
 
   addNewRow() {
     this.modal.show();
     this.isEditMode = false;
     this.readOnlyMode = false;
-    this.selectedCity = {};
+    this.selectedVendor = {};
   }
 
   viewRow (row) {
     this.modal.show();
     this.isEditMode = false;
     this.readOnlyMode = true;
-    this.selectedCity = row;
+    this.selectedVendor = row;
   }
 
   editRow (row) {
     this.modal.show();
     this.isEditMode = true;
     this.readOnlyMode = false;
-    this.selectedCity = row;
+    this.selectedVendor = row;
   }
 
   deleteRow (row) {
@@ -173,6 +178,5 @@ export class CitiesComponent implements OnInit {
   hideModal() {
     this.modal.hide();
   }
-
 
 }

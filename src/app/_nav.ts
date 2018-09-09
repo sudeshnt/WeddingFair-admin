@@ -1,4 +1,4 @@
-export const navItems = [
+export const navItemsForXAdmin = [
   {
     title: true,
     name: 'Components'
@@ -19,5 +19,22 @@ export const navItems = [
         icon: 'icon-puzzle'
       }
     ]
+  },
+  {
+    name: 'Vendors',
+    url: '/vendors',
+    icon: 'icon-puzzle',
+  }
+];
+
+export const navItemsForVendor = [
+  {
+    title: true,
+    name: 'Components'
+  },
+  {
+    name: 'My Profile',
+    url: '/my-profile',
+    icon: 'icon-puzzle',
   }
 ];

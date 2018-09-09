@@ -47,12 +47,12 @@ export class VendorAuthGuard implements CanActivate {
         return true;
       } else {
         this.toastr.error('You are not authorized to visit this page.', '');
-        this.router.navigate(['/login']).then();
+        this.authService.logout();
         return false;
       }
     } else {
       this.toastr.error('You are not authorized to visit this page.', '');
-      this.router.navigate(['/login']).then();
+      this.authService.logout();
       return false;
     }
   }

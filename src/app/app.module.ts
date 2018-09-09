@@ -1,19 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ModalModule } from 'ngx-bootstrap/modal';
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ToastrModule } from 'ngx-toastr';
-
-import { DefaultLayoutComponent } from './containers';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
-
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DialogModule } from 'primeng/dialog';
 
 const APP_CONTAINERS = [
@@ -65,11 +58,10 @@ import {
 import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ServiceCategoriesComponent } from './views/service-categories/service-categories.component';
-import { CitiesComponent } from './views/cities/cities.component';
-import { SubCategoriesComponent } from './views/sub-categories/sub-categories.component';
-import { DataTableComponent } from './components/data-table/data-table.component';
+import { DefaultLayoutComponent } from './containers';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './views/login/login.component';
+import { RegisterComponent } from './views/register/register.component';
 
 const API_SERVICES = [
   AdminService,
@@ -100,20 +92,15 @@ const SERVICES = [
 @NgModule({
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS,
     LoginComponent,
     RegisterComponent,
-    ServiceCategoriesComponent,
-    CitiesComponent,
-    SubCategoriesComponent,
-    DataTableComponent
+    ...APP_CONTAINERS
   ],
   imports: [
-    NgxDatatableModule,
-    ModalModule.forRoot(),
+    FormsModule,
+
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     AppAsideModule,
