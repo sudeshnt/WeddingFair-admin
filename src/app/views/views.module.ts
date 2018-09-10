@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { AgmCoreModule } from '@agm/core';
 
 import { ViewsRoutingModule } from './views-routing.module';
 import { ViewsComponent } from './views.component';
@@ -13,6 +14,8 @@ import { SubCategoriesComponent } from './xadmin/master-data/sub-categories/sub-
 import { VendorsComponent } from './xadmin/vendors/vendors.component';
 import { DataTableComponent } from '../components/data-table/data-table.component';
 import { MyProfileComponent } from './vendor/my-profile/my-profile.component';
+import { MediaComponent } from './vendor/media/media.component';
+import { LocationComponent } from './vendor/location/location.component';
 
 @NgModule({
     declarations: [
@@ -22,10 +25,15 @@ import { MyProfileComponent } from './vendor/my-profile/my-profile.component';
       SubCategoriesComponent,
       DataTableComponent,
       VendorsComponent,
-      MyProfileComponent
+      MyProfileComponent,
+      MediaComponent,
+      LocationComponent
     ],
   imports: [
     ModalModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAju8NqvoQwZrbzEEOKDue91SlPe7M9lmc'
+    }),
     NgxDatatableModule,
     FormsModule,
     CommonModule,

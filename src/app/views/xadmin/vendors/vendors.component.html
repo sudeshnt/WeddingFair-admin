@@ -1,17 +1,18 @@
-<div class="row align-items-center">
-  <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
-    <button type="button" class="btn btn-block btn-primary" data-toggle="modal" (click)="addNewRow()">Add New</button>
-  </div>
-  <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
-    <button type="button" class="btn btn-block btn-success" (click)="updateStatusOfSelected(Config.statusList.APPROVED.id)">Approve</button>
-  </div>
-  <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
-    <button type="button" class="btn btn-block btn-warning" (click)="updateStatusOfSelected(Config.statusList.SUSPENDED.id)">Suspend</button>
-  </div>
-</div>
-
+<nav id="navbar-example2" class="navbar navbar-light bg-light button-bar">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <button type="button" class="btn btn-block btn-primary" data-toggle="modal" (click)="addNewRow()">Add New</button>
+    </li>
+    <li class="nav-item">
+      <button type="button" class="btn btn-block btn-success" (click)="updateStatusOfSelected(Config.statusList.APPROVED.id)">Approve</button>
+    </li>
+    <li class="nav-item">
+      <button type="button" class="btn btn-block btn-warning" (click)="updateStatusOfSelected(Config.statusList.SUSPENDED.id)">Suspend</button>
+    </li>
+  </ul>
+</nav>
 <ngx-datatable
-  style="width: 90%"
+  style="width: 100%"
   class="material"
   [rows]="tableConfig.rows"
   [columns]="tableConfig.columns"

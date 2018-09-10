@@ -11,19 +11,19 @@ export const navItemsForXAdmin = [
       {
         name: 'Categories',
         url: '/master-data/categories',
-        icon: 'icon-puzzle'
+        icon: 'icon-layers'
       },
       {
         name: 'Cities',
         url: '/master-data/cities',
-        icon: 'icon-puzzle'
+        icon: 'icon-compass'
       }
     ]
   },
   {
     name: 'Vendors',
     url: '/vendors',
-    icon: 'icon-puzzle',
+    icon: 'icon-people',
   }
 ];
 
@@ -35,6 +35,16 @@ export const navItemsForVendor = [
   {
     name: 'My Profile',
     url: '/my-profile',
-    icon: 'icon-puzzle',
+    icon: 'icon-user',
+  },
+  {
+    name: 'Media',
+    url: '/media',
+    icon: 'fa fa-file-photo-o',
+  },
+  {
+    name: 'Location',
+    url: '/location',
+    icon: 'icon-location-pin',
   }
 ];

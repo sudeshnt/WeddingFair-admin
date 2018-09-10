@@ -6,6 +6,8 @@ import { XAdminAuthGuard, VendorAuthGuard } from '../shared/services';
 import { ServiceCategoriesComponent } from './xadmin/master-data/service-categories/service-categories.component';
 import { CitiesComponent } from './xadmin/master-data/cities/cities.component';
 import { VendorsComponent } from './xadmin/vendors/vendors.component';
+import { MediaComponent } from './vendor/media/media.component';
+import { LocationComponent } from './vendor/location/location.component';
 
 import { MyProfileComponent } from './vendor/my-profile/my-profile.component';
 
@@ -54,6 +56,22 @@ export const routes: Routes = [
     component: MyProfileComponent,
     data: {
       title: 'My Profile'
+    },
+    canActivate: [ VendorAuthGuard ]
+  },
+  {
+    path: 'media',
+    component: MediaComponent,
+    data: {
+      title: 'Media'
+    },
+    canActivate: [ VendorAuthGuard ]
+  },
+  {
+    path: 'location',
+    component: LocationComponent,
+    data: {
+      title: 'Location'
     },
     canActivate: [ VendorAuthGuard ]
   }

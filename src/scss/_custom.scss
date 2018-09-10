@@ -1,1 +1,16 @@
 // Here you can add other styles
+.button-bar {
+  margin-bottom: 10px;
+}
+
+.button-bar > .nav{
+  margin-left: auto;
+}
+
+.button-bar > .nav > .nav-item{
+  margin: 0 0 0 10px;
+}
+
+agm-map {
+  height: 300px;
+}

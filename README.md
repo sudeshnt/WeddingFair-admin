@@ -32,7 +32,10 @@ sudo ng g service shared/services/api-data-services/shop --module app.module.ts 
 
  ng g c views/service-categories --module app.module.ts --spec false
  
-  ng g c views/vendor/my-profile --module views/views.module.ts --spec false
+ ng g c views/vendor/my-profile --module views/views.module.ts --spec false
  
  use to upload images
  https://academind.com/learn/angular/snippets/angular-image-upload-made-easy/
+
+ used for maps
+ https://angular-maps.com/api-docs/agm-core/components/AgmMap.html 

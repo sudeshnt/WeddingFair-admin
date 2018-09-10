@@ -38,5 +38,8 @@ export class LoginComponent {
     }
   }
 
+  registerPage () {
+    this.router.navigate(['/register']).then();
+  }
 
 }
