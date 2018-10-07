@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../../shared/services';
 
 @Component({
   selector: 'app-location',
@@ -10,9 +11,10 @@ export class LocationComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    console.log(this.authService.getLoggedInUser());
   }
 
   clickMap (event) {

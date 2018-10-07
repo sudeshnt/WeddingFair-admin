@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
-
+  public fileUploadConfig: any = {};
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onFileUploadEvent($event) {
+    if ($event.type === 'uploaded') {
+    }
   }
 
 }

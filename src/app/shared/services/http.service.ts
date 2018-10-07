@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { AppConfig } from '../config';
 import { PublicData } from '../data/public-data';
 import { ComFunction } from '../class';
+import {hasOwnProperty} from 'tslint/lib/utils';
 
 @Injectable()
 export class HttpService {
@@ -51,6 +52,28 @@ export class HttpService {
     const httpHeaders = this.setHeader(header, header_value);
     const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
     return this.httpClient.put(url, body, { headers: httpHeaders }).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(
+          this.comFunc.httpErrorHandler(error)
+        )
+      )
+    );
+  }
+
+  httpPostFile(sevConfig: any, path: string, body: any, header_value: any) {
+    const header = new HttpHeaders();
+    const httpHeaders = this.setHeader(header, header_value);
+    const url = this.WEB_API_URL + sevConfig.ROUTE_PATH + path;
+    const formData: FormData = new FormData();
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        formData.append(key, body[key]);
+      }
+    }
+    return this.httpClient.post(url, formData, { headers: httpHeaders, reportProgress: true, observe: 'events' }).pipe(
       map(
         (res: any) => res
       ),

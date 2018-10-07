@@ -16,6 +16,7 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 import { MyProfileComponent } from './vendor/my-profile/my-profile.component';
 import { MediaComponent } from './vendor/media/media.component';
 import { LocationComponent } from './vendor/location/location.component';
+import { FileUploadComponent } from '../components/file-upload/file-upload.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { LocationComponent } from './vendor/location/location.component';
       VendorsComponent,
       MyProfileComponent,
       MediaComponent,
-      LocationComponent
+      LocationComponent,
+      FileUploadComponent
     ],
   imports: [
     ModalModule.forRoot(),

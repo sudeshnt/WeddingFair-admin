@@ -15,6 +15,11 @@ export class ServiceConfig {
     ROUTE_PATH : '/client_service'
   };
 
+  public static IMAGE_SERVICE = {
+    NAME : 'IMAGE MANAGEMENT SERVICE',
+    ROUTE_PATH : '/image_service'
+  };
+
   public static MASTER_SERVICE = {
     NAME : 'MASTER-DATA SERVICE',
     ROUTE_PATH : '/master_data_service'
