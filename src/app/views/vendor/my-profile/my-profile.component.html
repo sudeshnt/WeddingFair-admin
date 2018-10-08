@@ -1,3 +1,120 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Company</strong>
+        <small> Details</small>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input class="form-control" id="company" type="text" placeholder="Enter your company name">
+        </div>
+        <div class="form-group">
+          <label for="vat">Business Reg. Number</label>
+          <input class="form-control" id="vat" type="text" placeholder="PL1234567890">
+        </div>
+        <div class="form-group">
+          <label for="street">Address</label>
+          <input class="form-control" id="street" type="text" placeholder="Enter street name">
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-8">
+            <label for="city">City</label>
+            <input class="form-control" id="city" type="text" placeholder="Enter your city">
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="postal-code">Postal Code</label>
+            <input class="form-control" id="postal-code" type="text" placeholder="Postal Code">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="country">Logo</label>
+          <app-file-upload [config]="fileUploadConfig" (onFileUploadEvent)="onFileUploadEvent($event)"></app-file-upload>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Contact </strong>
+        <small>Details</small>
+      </div>
+      <div class="card-body">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <label for="country">Email</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+              <input class="form-control" id="input1-group1" type="text" name="input1-group1" placeholder="Username">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <label for="country">Mobile</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+              <input class="form-control" id="input1-group1" type="text" name="input1-group1" placeholder="Username">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <label for="country">Telephone</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+              <input class="form-control" id="input1-group1" type="text" name="input1-group1" placeholder="Username">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-header">
+        <strong>Social Media </strong>
+        <small>Details</small>
+      </div>
+      <div class="card-body">
+        <div class="form-group row">
+          <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-prepend">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fa fa-facebook"></i>
+                  </button>
+                </span>
+              <input class="form-control" id="input3-group2" type="text" name="input3-group2" placeholder="Search">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-prepend">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fa fa-instagram"></i>
+                  </button>
+                </span>
+              <input class="form-control" id="input3-group2" type="text" name="input3-group2" placeholder="Search">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p>
-  <app-file-upload [config]="fileUploadConfig" (onFileUploadEvent)="onFileUploadEvent($event)"></app-file-upload>
 </p>

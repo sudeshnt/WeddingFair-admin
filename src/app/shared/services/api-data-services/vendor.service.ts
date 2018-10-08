@@ -56,6 +56,23 @@ export class VendorService {
   }
 
   // GET
+  public getVendorById (vendorId) {
+    const path = `/details/${vendorId}`;
+    return this.httpService.httpGet(ServiceConfig.VENDOR_SERVICE, path, {}, null).pipe(
+      map(
+        (res: any) => {
+          res = res.map(item =>
+            this.vendorMap.mapVendor(item)
+          );
+          return res;
+        }
+      ),
+      catchError(
+        (error: any) => throwError(error)
+      ));
+  }
+
+  // GET
   public getApprovedCategories () {
     const path = '/categories/approved';
     return this.httpService.httpGet(ServiceConfig.VENDOR_SERVICE, path, {}, null).pipe(
