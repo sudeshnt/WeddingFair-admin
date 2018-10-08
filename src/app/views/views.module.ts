@@ -34,7 +34,7 @@ import { FileUploadComponent } from '../components/file-upload/file-upload.compo
   imports: [
     ModalModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAju8NqvoQwZrbzEEOKDue91SlPe7M9lmc'
+      apiKey: 'AIzaSyDGWI18ofsLIJUxXoJMUTpjx1MfTVxRl2s'
     }),
     NgxDatatableModule,
     FormsModule,

@@ -1,120 +1,156 @@
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-header">
-        <strong>Company</strong>
-        <small> Details</small>
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <label for="company">Company</label>
-          <input class="form-control" id="company" type="text" placeholder="Enter your company name">
+<form  #register_form="ngForm" (ngSubmit)="onVendorFormSubmit(register_form)" class="form-horizontal" role="form">
+  <nav id="navbar-example2" class="navbar navbar-light bg-light button-bar">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <button type="reset" class="btn btn-block btn-primary" data-toggle="modal">Reset</button>
+      </li>
+      <li class="nav-item">
+        <button type="submit" class="btn btn-block btn-success">Save</button>
+      </li>
+    </ul>
+  </nav>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Company</strong>
+          <small> Details</small>
         </div>
-        <div class="form-group">
-          <label for="vat">Business Reg. Number</label>
-          <input class="form-control" id="vat" type="text" placeholder="PL1234567890">
-        </div>
-        <div class="form-group">
-          <label for="street">Address</label>
-          <input class="form-control" id="street" type="text" placeholder="Enter street name">
-        </div>
-        <div class="row">
-          <div class="form-group col-sm-8">
-            <label for="city">City</label>
-            <input class="form-control" id="city" type="text" placeholder="Enter your city">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="shopName">Company</label>
+            <input class="form-control" id="shopName" type="text" placeholder="Enter your company name"
+                   name="name" #name="ngModel" [ngModel]="vendor.name" required>
           </div>
-          <div class="form-group col-sm-4">
-            <label for="postal-code">Postal Code</label>
-            <input class="form-control" id="postal-code" type="text" placeholder="Postal Code">
+          <div class="form-group">
+            <label for="regNumber">Business Reg. Number</label>
+            <input class="form-control" id="regNumber" type="text" placeholder="Business Reg. Number"
+                   name="regNumber" #regNumber="ngModel" [ngModel]="vendor.regNumber" required>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="country">Logo</label>
-          <app-file-upload [config]="fileUploadConfig" (onFileUploadEvent)="onFileUploadEvent($event)"></app-file-upload>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-header">
-        <strong>Contact </strong>
-        <small>Details</small>
-      </div>
-      <div class="card-body">
-        <div class="form-group row">
-          <div class="col-md-12">
-            <label for="country">Email</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input class="form-control" id="input1-group1" type="text" name="input1-group1" placeholder="Username">
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input class="form-control" id="address" type="text" placeholder="Enter street Address"
+                   name="addressLine1" #addressLine1="ngModel" [ngModel]="vendor.addressLine1" required>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-8">
+              <label for="city">City</label>
+              <select class="form-control" id="city" name="cityId" #cityId="ngModel" [ngModel]="vendor.cityId">
+                <option value="">Select your city</option>
+                <option *ngFor="let city of cities" [value]="city.cityId">{{city.name}}</option>
+              </select>
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="postal-code">Postal Code</label>
+              <input class="form-control" id="postal-code" type="text" placeholder="Postal Code"
+                     name="postalCode" #postalCode="ngModel" [ngModel]="vendor.postalCode">
             </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-12">
-            <label for="country">Mobile</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input class="form-control" id="input1-group1" type="text" name="input1-group1" placeholder="Username">
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-12">
-            <label for="country">Telephone</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input class="form-control" id="input1-group1" type="text" name="input1-group1" placeholder="Username">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-header">
-        <strong>Social Media </strong>
-        <small>Details</small>
-      </div>
-      <div class="card-body">
-        <div class="form-group row">
-          <div class="col-md-12">
-            <div class="input-group">
-                <span class="input-group-prepend">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fa fa-facebook"></i>
-                  </button>
-                </span>
-              <input class="form-control" id="input3-group2" type="text" name="input3-group2" placeholder="Search">
-            </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-md-12">
-            <div class="input-group">
-                <span class="input-group-prepend">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fa fa-instagram"></i>
-                  </button>
-                </span>
-              <input class="form-control" id="input3-group2" type="text" name="input3-group2" placeholder="Search">
-            </div>
+          <div class="form-group">
+            <label for="logo">Logo</label>
+            <app-file-upload id="logo" [config]="fileUploadConfig" (onFileUploadEvent)="onFileUploadEvent($event)"></app-file-upload>
+            <img [src]="AppConfig.IMAGE_URL + vendor.logoUrl" alt="" class="img-thumbnail">
           </div>
         </div>
       </div>
     </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Contact </strong>
+          <small>Details</small>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="email">Email</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                </div>
+                <input class="form-control" id="email" type="email" placeholder="Enter your email"
+                       name="email" #email="ngModel" [ngModel]="vendor.email" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="mobile">Mobile</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-mobile-phone"></i>
+                  </span>
+                </div>
+                <input class="form-control" id="mobile" type="text" placeholder="Enter your mobile"
+                       name="mobile" #mobile="ngModel" [ngModel]="vendor.mobile" maxlength="10" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="telephone">Telephone</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-phone"></i>
+                  </span>
+                </div>
+                <input class="form-control" id="telephone" type="text" placeholder="Enter your telephone"
+                       name="telephone" #telephone="ngModel" [ngModel]="vendor.telephone" maxlength="10" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="website">Web Site</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-globe"></i>
+                  </span>
+                </div>
+                <input class="form-control" id="website" type="text" placeholder="Enter Website Url"
+                       name="website" #website="ngModel" [ngModel]="vendor.website" maxlength="10">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-header">
+          <strong>Social Media </strong>
+          <small>Details</small>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <div class="col-md-12">
+              <div class="input-group">
+                  <span class="input-group-prepend">
+                    <button class="btn btn-primary facebook-icon" type="button">
+                      <i class="fa fa-facebook"></i>
+                    </button>
+                  </span>
+                <input class="form-control" id="facebook" type="text" placeholder="Facebook link"
+                       name="facebook" #facebook="ngModel" [ngModel]="vendor.facebook">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <div class="input-group">
+                  <span class="input-group-prepend">
+                    <button class="btn btn-primary instagram-icon" type="button">
+                      <i class="fa fa-instagram"></i>
+                    </button>
+                  </span>
+                <input class="form-control" id="fa-instagram" type="text" placeholder="Instagram link"
+                       name="instagram" #instagram="ngModel" [ngModel]="vendor.instagram">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-<p>
-</p>
+</form>

@@ -39,3 +39,6 @@ sudo ng g service shared/services/api-data-services/shop --module app.module.ts 
 
  used for maps
  https://angular-maps.com/api-docs/agm-core/components/AgmMap.html 
+ 
+ geocoder
+ https://medium.freecodecamp.org/how-you-can-replicate-airbnbs-location-area-display-using-geocoding-in-angular-2001794f86a9

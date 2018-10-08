@@ -24,7 +24,6 @@ export class XAdminAuthGuard implements CanActivate {
         return false;
       }
     } else {
-      this.toastr.error('You are not authorized to visit this page.', '');
       this.router.navigate(['/login']).then();
       return false;
     }
@@ -51,7 +50,6 @@ export class VendorAuthGuard implements CanActivate {
         return false;
       }
     } else {
-      this.toastr.error('You are not authorized to visit this page.', '');
       this.authService.logout();
       return false;
     }

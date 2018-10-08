@@ -12,6 +12,7 @@ export class VendorService {
 
   constructor(private httpService: HttpService, private vendorMap: VendorMapService, private commonMap: CommonMapService) { }
 
+  // POST
   public registerVendor (req) {
     const path = '';
     const request = this.vendorMap.mapVendorRegisterReq(req);
@@ -27,6 +28,18 @@ export class VendorService {
   // PUT
   public updateVendorStatus (req) {
     const path = '/updateStatus';
+    return this.httpService.httpPut(ServiceConfig.VENDOR_SERVICE, path, req, null).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(error)
+      ));
+  }
+
+  // PUT
+  public updateVendor (req) {
+    const path = '';
     return this.httpService.httpPut(ServiceConfig.VENDOR_SERVICE, path, req, null).pipe(
       map(
         (res: any) => res

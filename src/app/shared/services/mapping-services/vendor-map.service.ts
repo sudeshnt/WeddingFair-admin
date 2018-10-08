@@ -37,6 +37,7 @@ export class VendorMapService {
       'regNumber': data.regNumber || null,
       'createdDate': data.createdDate || null,
       'cityId': data.cityId || 0,
+      'cityName': data.cityName || null,
       'addressLine1': data.addressLine1 || null,
       'addressLine2': data.addressLine2 || null,
       'mobile': data.mobile || null,
