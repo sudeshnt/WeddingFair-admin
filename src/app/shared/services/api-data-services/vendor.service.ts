@@ -85,17 +85,32 @@ export class VendorService {
       ));
   }
 
-  // GET
-  public getApprovedCategories () {
-    const path = '/categories/approved';
-    return this.httpService.httpGet(ServiceConfig.VENDOR_SERVICE, path, {}, null).pipe(
+  // POST
+  public galleryImageFindByCriteria (req) {
+    const path = '/images/findByCriteria';
+    const request = this.commonMap.mapFindByCriteriaReq(req);
+    return this.httpService.httpPost(ServiceConfig.VENDOR_SERVICE, path, request, null).pipe(
       map(
         (res: any) => {
           res.data = res.data.map(item =>
-            this.vendorMap.mapVendor(item)
+            item
+            // this.masterDataMap.mapCity(item)
           );
           return res;
         }
+      ),
+      catchError(
+        (error: any) =>
+          throwError(error)
+      ));
+  }
+
+  // POST
+  public createGalleryImage (req) {
+    const path = '/image';
+    return this.httpService.httpPost(ServiceConfig.VENDOR_SERVICE, path, req, null).pipe(
+      map(
+        (res: any) => res
       ),
       catchError(
         (error: any) => throwError(error)

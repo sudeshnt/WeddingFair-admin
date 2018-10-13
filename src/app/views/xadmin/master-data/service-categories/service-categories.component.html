@@ -78,6 +78,11 @@
             <input type="text" name="description" #description="ngModel" [(ngModel)]="selectedCategory.description" class="form-control"
                    id="description" placeholder="Enter your company name" [disabled]="readOnlyMode">
           </div>
+          <div class="form-group">
+            <label for="logo">Image</label>
+            <app-file-upload id="logo" [config]="fileUploadConfig" (onFileUploadEvent)="onFileUploadEvent($event)"></app-file-upload>
+            <img *ngIf="selectedCategory.imageUrl" [src]="AppConfig.IMAGE_URL + selectedCategory.imageUrl" alt="" class="img-thumbnail">
+          </div>
         </div>
       </div>
       <div class="modal-footer">

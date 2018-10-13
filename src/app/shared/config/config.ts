@@ -1,5 +1,7 @@
 export class Config {
 
+  public static getAllLimit = 999;
+
   public static pageSize = 10;
 
   public static adminTypes = {

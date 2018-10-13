@@ -2,6 +2,22 @@ import { Config } from '../config';
 
 export class ComFunction {
 
+  devideArrayIntoColumns (theArr: String[], columns: number): String[][] {
+    const arrOfarrays = [];
+    for (let i = 0; i < theArr.length ; i += columns) {
+      const row = [];
+      for (let x = 0; x < columns; x++) {
+        const value = theArr[i + x];
+        if (!value) {
+          break;
+        }
+        row.push(value);
+      }
+      arrOfarrays.push(row);
+    }
+    return arrOfarrays;
+  }
+
   public getStatusName (statusId) {
     const statusKey = Object.keys(Config.statusList).find(key => Config.statusList[key].id === statusId);
     return Config.statusList[statusKey].name;

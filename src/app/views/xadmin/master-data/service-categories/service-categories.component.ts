@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../../../../shared/services/api-data-services/index';
-import { Config } from '../../../../shared/config/index';
+import {AppConfig, Config} from '../../../../shared/config/index';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ComFunction } from '../../../../shared/class/index';
 
@@ -14,8 +14,9 @@ declare var $;
 export class ServiceCategoriesComponent implements OnInit {
   @ViewChild('myModal') public modal: ModalDirective;
 
-  constructor(private categoryService: CategoryService, private comFunc: ComFunction) { }
+  public fileUploadConfig: any = {};
 
+  AppConfig = AppConfig;
   Config = Config;
   readOnlyMode = false;
   isEditMode = false;
@@ -44,6 +45,7 @@ export class ServiceCategoriesComponent implements OnInit {
     selected : []
   };
 
+  constructor(private categoryService: CategoryService, private comFunc: ComFunction) { }
 
   ngOnInit() {
     this.getCategoryList();
@@ -90,7 +92,7 @@ export class ServiceCategoriesComponent implements OnInit {
         const req = {
           'name': cat_form.value.name,
           'description': cat_form.value.description,
-          'imageUrl': ''
+          'imageUrl': this.selectedCategory.imageUrl
         };
         this.categoryService.createCategory(req).subscribe((response: any) => {
           this.hideModal();
@@ -101,7 +103,7 @@ export class ServiceCategoriesComponent implements OnInit {
           'categoryId': this.selectedCategory.categoryId,
           'name': cat_form.value.name,
           'description': cat_form.value.description,
-          'imageUrl': ''
+          'imageUrl': this.selectedCategory.imageUrl
         };
         this.categoryService.updateCategory(req).subscribe((response: any) => {
           this.hideModal();
@@ -177,6 +179,12 @@ export class ServiceCategoriesComponent implements OnInit {
 
   hideModal() {
     this.modal.hide();
+  }
+
+  onFileUploadEvent($event) {
+    if ($event.type === 'uploaded') {
+      this.selectedCategory.imageUrl = $event.data.fileName;
+    }
   }
 
 }

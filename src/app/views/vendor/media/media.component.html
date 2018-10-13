@@ -1,3 +1,78 @@
-<p>
-  media works!
-</p>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Image</strong>
+        <small> Gallery</small>
+      </div>
+      <div class="card-body">
+        <nav class="navbar navbar-light bg-light button-bar">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <button type="button" class="btn btn-block btn-primary" data-toggle="modal" (click)="addNewGalleryImage()">Add New</button>
+            </li>
+            <li class="nav-item">
+              <button type="reset" class="btn btn-block btn-warning">Suspend</button>
+            </li>
+            <li class="nav-item">
+              <button type="submit" class="btn btn-block btn-success">Approve</button>
+            </li>
+          </ul>
+        </nav>
+        <div class="row" *ngFor="let imageRow of galleryImages">
+          <div class="col-sm-4 no-padding" *ngFor="let image of imageRow">
+            <img *ngIf="image" [src]="AppConfig.IMAGE_URL + image.galleryImageUrl" alt="" class="img-thumbnail">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Video</strong>
+        <small> Gallery</small>
+      </div>
+      <div class="card-body">
+        <nav class="navbar navbar-light bg-light button-bar">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <button type="button" class="btn btn-block btn-primary" data-toggle="modal">Add New</button>
+            </li>
+            <li class="nav-item">
+              <button type="reset" class="btn btn-block btn-warning">Suspend</button>
+            </li>
+            <li class="nav-item">
+              <button type="submit" class="btn btn-block btn-success">Approve</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Gallery Image</h4>
+        <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div class="form-group">
+            <app-file-upload id="logo" [config]="fileUploadConfig" (onFileUploadEvent)="onFileUploadEvent($event)"></app-file-upload>
+            <img *ngIf="imageUrl" [src]="AppConfig.IMAGE_URL + imageUrl" alt="" class="img-thumbnail">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="myModal.hide()">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="saveGalleryImage()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

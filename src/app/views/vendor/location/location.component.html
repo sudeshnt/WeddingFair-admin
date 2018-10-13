@@ -1,3 +1,14 @@
-<agm-map [latitude]="lat" [longitude]="lng" (mapClick)="clickMap($event)">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+<nav class="navbar navbar-light bg-light button-bar">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <button type="reset" class="btn btn-block btn-primary">Reset</button>
+    </li>
+    <li class="nav-item">
+      <button type="submit" class="btn btn-block btn-success">Update Location</button>
+    </li>
+  </ul>
+</nav>
+
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="clickMap($event)">
+  <agm-marker [latitude]="marker_lat" [longitude]="marker_lng"></agm-marker>
 </agm-map>
