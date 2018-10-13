@@ -117,4 +117,28 @@ export class VendorService {
       ));
   }
 
+  // PUT
+  public updateImageStatus (req) {
+    const path = '/image/updateStatus';
+    return this.httpService.httpPut(ServiceConfig.VENDOR_SERVICE, path, req, null).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(error)
+      ));
+  }
+
+  // PUT
+  public updateVendorLocation (req) {
+    const path = '/location';
+    return this.httpService.httpPut(ServiceConfig.VENDOR_SERVICE, path, req, null).pipe(
+      map(
+        (res: any) => res
+      ),
+      catchError(
+        (error: any) => throwError(error)
+      ));
+  }
+
 }

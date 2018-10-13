@@ -14,6 +14,7 @@ export class MediaComponent implements OnInit {
   @ViewChild('myModal') public modal: ModalDirective;
 
   AppConfig = AppConfig;
+  Config = Config;
 
   imageUrl = '';
   galleryImages: any[][] = [];
@@ -60,6 +61,28 @@ export class MediaComponent implements OnInit {
       }
     }, (error) => {
 
+    });
+  }
+
+  updateStatusOfSelected (status) {
+    for (const imageRow of this.galleryImages) {
+      for (const image of imageRow) {
+        if (image.selected) {
+          this.updateImageStatus(image.galleryImageId, status);
+          image.selected = false;
+        }
+      }
+    }
+  }
+
+  updateImageStatus (imageId, status) {
+    const req = {
+      'serviceProviderId' : this.authService.getLoggedInUser().serviceProviderId,
+      'primaryId' : imageId,
+      'status' : status
+    };
+    this.vendorService.updateImageStatus(req).subscribe((response) => {
+      this.initGalleryImages();
     });
   }
 

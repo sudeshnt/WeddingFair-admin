@@ -12,15 +12,30 @@
               <button type="button" class="btn btn-block btn-primary" data-toggle="modal" (click)="addNewGalleryImage()">Add New</button>
             </li>
             <li class="nav-item">
-              <button type="reset" class="btn btn-block btn-warning">Suspend</button>
+              <button type="reset" class="btn btn-block btn-warning" (click)="updateStatusOfSelected(Config.statusList.SUSPENDED.id)">Suspend</button>
             </li>
             <li class="nav-item">
-              <button type="submit" class="btn btn-block btn-success">Approve</button>
+              <button type="submit" class="btn btn-block btn-success" (click)="updateStatusOfSelected(Config.statusList.APPROVED.id)">Approve</button>
             </li>
           </ul>
         </nav>
         <div class="row" *ngFor="let imageRow of galleryImages">
           <div class="col-sm-4 no-padding" *ngFor="let image of imageRow">
+            <input type="checkbox" [(ngModel)]="image.selected">
+            <span class="badge image-status" [ngClass]="{
+            'badge-primary' : image.status === Config.statusList.PENDING.id,
+            'badge-success' : image.status === Config.statusList.APPROVED.id,
+            'badge-warning' : image.status === Config.statusList.SUSPENDED.id
+            }">
+              <span [ngSwitch]="image.status">
+                <span *ngSwitchCase="Config.statusList.CREATED.id || Config.statusList.PENDING.id">Approved</span>
+                <span *ngSwitchCase="Config.statusList.APPROVED.id">Approved</span>
+                <span *ngSwitchCase="Config.statusList.SUSPENDED.id">Approved</span>
+              </span>
+            </span>
+            <span class="badge badge-warning image-status" *ngIf="image.status === Config.statusList.SUSPENDED">
+              Suspended
+            </span>
             <img *ngIf="image" [src]="AppConfig.IMAGE_URL + image.galleryImageUrl" alt="" class="img-thumbnail">
           </div>
         </div>
