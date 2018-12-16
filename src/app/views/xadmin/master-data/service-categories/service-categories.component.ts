@@ -131,7 +131,7 @@ export class ServiceCategoriesComponent implements OnInit {
 
   setPage(pageInfo) {
     this.tableConfig.loading = true;
-    this.tableConfig.pagination.pageNumber = pageInfo.offset;
+    this.tableConfig.pagination.pageNumber = pageInfo.offset * Config.pageSize;
     this.getCategoryList();
   }
 

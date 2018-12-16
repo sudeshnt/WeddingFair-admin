@@ -42,6 +42,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   onVendorFormSubmit(vendor_form) {
+    console.log(vendor_form);
     if (vendor_form.valid) {
       const req = {
         'serviceProviderId': this.vendor.serviceProviderId,
@@ -60,13 +61,11 @@ export class MyProfileComponent implements OnInit {
         'logoUrl': this.vendor.logoUrl,
         'displaySequence': 0,
       };
-      console.log(req);
       this.vendorService.updateVendor(req).subscribe(
         (res: any) => console.log(res),
         (error: any) => console.log(error)
       );
     }
-    console.log(vendor_form);
   }
 
   onFileUploadEvent($event) {
